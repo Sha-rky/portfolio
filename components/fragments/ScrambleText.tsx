@@ -131,7 +131,7 @@ export default function HeroScrambleText({
 			if (timeline.current) timeline.current.kill();
 			if (timeoutRef.current) clearTimeout(timeoutRef.current);
 		};
-	}, []); // 使用 useRef 管理狀態，無需依賴
+	}, [chars, interval, words]); // 使用 useRef 管理狀態，無需依賴
 
 	return (
 		<span className={className}>
