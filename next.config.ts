@@ -1,15 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	async redirects() {
-		return [
-			{
-				source: "/",
-				destination: "/home",
-				permanent: true,
-			},
-		];
-	},
+    // output: 'export', // static export
+    // distDir: 'dist', // output directory
+    // images: {
+    //     unoptimized: true,
+    // },
 };
 
 export default nextConfig;

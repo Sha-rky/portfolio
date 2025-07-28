@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" opacity="0.8">
+  <defs>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="120" />
+    </filter>
+  </defs>
+  <!-- Central pink blob -->
+  <ellipse cx="800" cy="500" rx="35" ry="22" fill="rgba(255, 105, 180, 0.35)" filter="url(#blur)" />
+  <!-- Top left blue blob -->
+  <ellipse cx="350" cy="200" rx="25" ry="18" fill="rgba(70, 130, 180, 0.25)" filter="url(#blur)" />
+  <!-- Bottom right purple blob -->
+  <ellipse cx="1300" cy="700" rx="30" ry="20" fill="rgba(138, 43, 226, 0.22)" filter="url(#blur)" />
+  <!-- Top right light pink blob -->
+  <ellipse cx="1300" cy="180" rx="18" ry="12" fill="rgba(240, 128, 128, 0.18)" filter="url(#blur)" />
+  <!-- Bottom left blue blob -->
+  <ellipse cx="300" cy="800" rx="20" ry="12" fill="rgba(70, 130, 180, 0.18)" filter="url(#blur)" />
+</svg>

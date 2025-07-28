@@ -16,7 +16,7 @@ export default function Navbar() {
     return (
         <nav className="fixed top-0 w-full p-4 backdrop-blur z-[1000]">
             <div className="flex justify-center gap-8 flex-wrap">
-                {["home", "about"].map((label) => (
+                {["other", "about"].map((label) => (
                     <NavLink key={label} label={label} href={`./${label}#`} />
                 ))}
             </div>
