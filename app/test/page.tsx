@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Library from "./_candidates/library";
+import CurrentComponents from "./_candidates/current-components";
+import CandidateComponents from "./_candidates/candidate-components";
 import Legacy from "./_candidates/legacy";
 
 const CANDIDATES = [
-	{ id: "library", group: "Library", label: "Kept Components", Component: Library },
+	{ id: "current", group: "Library", label: "Current Components", Component: CurrentComponents },
+	{ id: "candidates", group: "Library", label: "Candidate Components", Component: CandidateComponents },
 	{ id: "legacy", group: "Legacy", label: "Legacy Test", Component: Legacy },
 ] as const;
 
@@ -24,12 +26,15 @@ const GROUPS = ["Library", "Legacy"] as const;
  * The menu is inlined here rather than extracted: it is shell, not a
  * candidate, and `_candidates/` is reserved for pages that are in the running.
  *
- * Cleared down to two candidates on request: Library (which now also holds
- * every piece worth keeping from the candidates that were removed — see its
- * own file) and Legacy Test, kept in full and untouched.
+ * Cleared down to three candidates on request. The "Library" group splits
+ * what's kept into two pages by an honesty boundary: Current Components
+ * (imported live from components/, so a production regression shows up
+ * here too) and Candidate Components (sandbox pieces kept from deleted
+ * candidates, styled directly, never wired into production). Legacy Test
+ * is kept in full and untouched.
  */
 export default function TestSPAPage() {
-	const [active, setActive] = useState<CandidateId>("library");
+	const [active, setActive] = useState<CandidateId>("current");
 	const [open, setOpen] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
 
