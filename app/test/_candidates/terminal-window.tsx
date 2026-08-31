@@ -11,9 +11,32 @@ export interface TerminalWindowProps {
     children?: ReactNode;
     className?: string;
     hoverScale?: boolean;
-    variant?: "auto" | "cyberpunk" | "citypop";
+    variant?: "auto" | "cyberpunk" | "citypop" | "citypop-light";
     isDark?: boolean;
 }
+
+/**
+ * City Pop, light mode.
+ *
+ * Restores the palette from the archived components/archived/citypop-light.css
+ * (deleted in 1372af9 for being unused) — a lilac-canvas, ink-violet,
+ * coral-shadow counterpart to the black-canvas "citypop" variant below. It was
+ * defined as CSS custom properties but never actually consumed by a
+ * component; this is that missing consumer.
+ */
+const CITYPOP_LIGHT = {
+    border: "#1e1035",
+    shadow: "#e95b9e",
+    canvas: "#ece5f6",
+    titlebar: "#9e62de",
+    titlebarText: "#1e1035",
+    glyph: "#fde047",
+    textMain: "#271342",
+    textMuted: "#6b21a8",
+    btnMin: "#4bc8df",
+    btnMax: "#c89df2",
+    btnClose: "#e95b9e",
+};
 
 export function TerminalWindow({
     title,
@@ -26,6 +49,113 @@ export function TerminalWindow({
     variant = "auto",
     isDark = true
 }: TerminalWindowProps) {
+    if (variant === "citypop-light") {
+        return (
+            <div
+                className={`select-none relative flex flex-col border-2 transition-all duration-300 ease-out ${
+                    hoverScale ? "hover:scale-[1.015] hover:-translate-y-1 cursor-default" : ""
+                } ${className}`}
+                style={{
+                    borderColor: CITYPOP_LIGHT.border,
+                    backgroundColor: CITYPOP_LIGHT.canvas,
+                    boxShadow: `6px 6px 0px ${CITYPOP_LIGHT.shadow}`,
+                }}
+            >
+                <div
+                    className="flex shrink-0 items-center justify-between border-b-2 px-3 py-1.5 font-mono text-xs"
+                    style={{ borderColor: CITYPOP_LIGHT.border, backgroundColor: CITYPOP_LIGHT.titlebar }}
+                >
+                    <span
+                        className="text-xs font-extrabold tracking-wider"
+                        style={{ color: CITYPOP_LIGHT.titlebarText }}
+                    >
+                        &lt;/&gt;
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                        <span
+                            className="h-[18px] w-[18px] border"
+                            style={{ backgroundColor: CITYPOP_LIGHT.btnMin, borderColor: CITYPOP_LIGHT.border }}
+                        />
+                        <span
+                            className="h-[18px] w-[18px] border"
+                            style={{ backgroundColor: CITYPOP_LIGHT.btnMax, borderColor: CITYPOP_LIGHT.border }}
+                        />
+                        <span
+                            className="flex h-[18px] w-[18px] items-center justify-center border font-bold text-[11px] leading-none"
+                            style={{
+                                backgroundColor: CITYPOP_LIGHT.btnClose,
+                                borderColor: CITYPOP_LIGHT.border,
+                                color: CITYPOP_LIGHT.border,
+                            }}
+                        >
+                            ✕
+                        </span>
+                    </div>
+                </div>
+
+                <div className="flex flex-1 flex-col p-5 md:p-6" style={{ color: CITYPOP_LIGHT.textMain }}>
+                    {(typeof image === "string" ? image : image?.src) && (
+                        <div
+                            className="relative mb-4 aspect-video w-full shrink-0 overflow-hidden rounded border-2 md:h-52"
+                            style={{ borderColor: CITYPOP_LIGHT.border }}
+                        >
+                            <Image
+                                src={typeof image === "string" ? image : image!.src}
+                                alt={(typeof image === "string" ? title : image?.alt || title) || "Terminal preview"}
+                                width={800}
+                                height={450}
+                                className="h-full w-full object-cover"
+                            />
+                        </div>
+                    )}
+
+                    {title && (
+                        <h3
+                            className="mb-2.5 text-xl font-bold tracking-wide md:text-2xl"
+                            style={{ color: CITYPOP_LIGHT.border, fontFamily: "var(--font-orbitron)" }}
+                        >
+                            {title}
+                        </h3>
+                    )}
+
+                    {description && (
+                        <div
+                            className="mb-4 text-xs leading-relaxed md:text-sm"
+                            style={{ color: CITYPOP_LIGHT.textMuted }}
+                        >
+                            {description}
+                        </div>
+                    )}
+
+                    {tags && tags.length > 0 && (
+                        <div className="mt-auto flex flex-wrap gap-2.5 pt-1">
+                            {tags.map((tag, idx) => (
+                                <span
+                                    key={idx}
+                                    className="rounded-sm border px-2.5 py-0.5 font-mono text-xs font-bold"
+                                    style={{
+                                        borderColor: CITYPOP_LIGHT.border,
+                                        backgroundColor: CITYPOP_LIGHT.btnMax,
+                                        color: CITYPOP_LIGHT.border,
+                                        boxShadow: `2px 2px 0px ${CITYPOP_LIGHT.border}`,
+                                    }}
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {children && (
+                        <div className="mt-4 border-t pt-4" style={{ borderColor: `${CITYPOP_LIGHT.border}33` }}>
+                            {children}
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    }
+
     const isCyberpunk = variant === "cyberpunk" || variant === "citypop" || (variant === "auto" && isDark);
 
     const imageSrc = typeof image === "string" ? image : image?.src;

@@ -10,6 +10,7 @@ import V2Enterprise from "./_candidates/v2-enterprise";
 import V3Accents from "./_candidates/v3-accents";
 import V4Playground from "./_candidates/v4-playground";
 import V6CityPopSpec from "./_candidates/v6-citypop-spec";
+import V7CityPopLightSpec from "./_candidates/v7-citypop-light-spec";
 import RetroGeek from "./_candidates/retro-geek";
 import DreamyMagical from "./_candidates/dreamy-magical";
 import Legacy from "./_candidates/legacy";
@@ -23,7 +24,8 @@ const CANDIDATES = [
 	{ id: "v2", group: "Demos", label: "v2 · Enterprise", Component: V2Enterprise },
 	{ id: "v3", group: "Demos", label: "v3 · Accents", Component: V3Accents },
 	{ id: "v4", group: "Demos", label: "v4 · Playground", Component: V4Playground },
-	{ id: "v6", group: "Demos", label: "v6 · City Pop Spec", Component: V6CityPopSpec },
+	{ id: "v6", group: "Demos", label: "v6 · City Pop Spec (Dark)", Component: V6CityPopSpec },
+	{ id: "v7", group: "Demos", label: "v7 · City Pop Spec (Light)", Component: V7CityPopLightSpec },
 	{ id: "retro-geek", group: "Specs", label: "Retro Geek", Component: RetroGeek },
 	{ id: "dreamy-magical", group: "Specs", label: "Dreamy Magical", Component: DreamyMagical },
 	{ id: "legacy", group: "Specs", label: "Legacy Test", Component: Legacy },
