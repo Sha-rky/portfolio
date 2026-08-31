@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEO-TOKYO // GEEK PORTFOLIO 1984</title>
+    <style>
+        /* ==========================================
+           1. CITYPOP & GEEK THEME VARIABLES
+           ========================================== */
+        :root {
+            --bg-color: #0d0221;
+            --terminal-bg: rgba(26, 11, 46, 0.85);
+            --neon-pink: #ff2a85;
+            --neon-cyan: #05ffa1;
+            --neon-yellow: #f9f871;
+            --neon-purple: #b967ff;
+            --text-color: #e0e6ed;
+            --font-stack: 'Courier New', Courier, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(rgba(255, 42, 133, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(5, 255, 161, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-color);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* ==========================================
+           2. CRT SCANLINE EFFECT (復古螢幕效果)
+           ========================================== */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* ==========================================
+           3. TERMINAL CONTAINER
+           ========================================== */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--terminal-bg);
+            border: 2px solid var(--neon-pink);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 42, 133, 0.4),
+                        0 0 30px rgba(5, 255, 161, 0.2);
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+        }
+
+        /* Terminal Window Header */
+        .terminal-header {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .window-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .btn-close { background: #ff5f56; }
+        .btn-min { background: #ffbd2e; }
+        .btn-max { background: #27c93f; }
+
+        .terminal-body {
+            padding: 30px;
+        }
+
+        /* ==========================================
+           4. TYPOGRAPHY & GLITCH EFFECTS
+           ========================================== */
+        h1, h2, h3 {
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: var(--neon-yellow);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .highlight { color: var(--neon-pink); }
+        .keyword { color: var(--neon-cyan); }
+        .comment { color: #6c757d; font-style: italic; }
+
+        /* Cursor blinking */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            background-color: var(--neon-cyan);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        hr.divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan), transparent);
+            margin: 30px 0;
+        }
+
+        /* ==========================================
+           5. SECTIONS & GRID
+           ========================================== */
+        .section-title {
+            color: var(--neon-pink);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(13, 2, 33, 0.7);
+            border: 1px solid var(--neon-purple);
+            padding: 18px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(5, 255, 161, 0.3);
+        }
+
+        .card h3 {
+            color: var(--neon-yellow);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 0.88rem;
+            color: #b3b9c1;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            margin-top: 10px;
+            border-radius: 3px;
+            background: rgba(255, 42, 133, 0.2);
+            color: var(--neon-pink);
+            border: 1px solid var(--neon-pink);
+        }
+
+        /* Audio Player Bar (Citypop Essential) */
+        .citypop-player {
+            background: rgba(255, 42, 133, 0.1);
+            border: 1px dashed var(--neon-cyan);
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--neon-cyan);
+            transition: color 0.2s;
+        }
+
+        .social-links a:hover {
+            color: var(--neon-pink);
+            border-bottom-color: var(--neon-pink);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .terminal-body { padding: 15px; }
+            .logo { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Terminal Header Controls -->
+        <div class="terminal-header">
+            <div class="window-buttons">
+                <span class="btn-circle btn-close"></span>
+                <span class="btn-circle btn-min"></span>
+                <span class="btn-circle btn-max"></span>
+            </div>
+            <div>SYS_MAIN_OS // PORTFOLIO_v2.6.exe</div>
+            <div>[80-86 MHz]</div>
+        </div>
+
+        <!-- Main Content Body -->
+        <div class="terminal-body">
+
+            <!-- BGM Player Widget (Citypop Theme) -->
+            <div class="citypop-player">
+                <div>
+                    <span class="highlight">♫ NOW PLAYING:</span> Tatsuro Yamashita - Plastic Love (.midi)
+                </div>
+                <div class="comment">[PLAYING...]</div>
+            </div>
+
+            <!-- Intro Section -->
+            <section>
+                <div class="comment">// Executing identity_check.sh...</div>
+                <h1 class="logo">HERO_NAME<span class="cursor">&nbsp;</span></h1>
+                <div class="subtitle">FULL-STACK DEVELOPER // CREATIVE CODER // CITYPOP ENTHUSIAST</div>
+                
+                <p>
+                    <span class="keyword">const</span> bio = {<br>
+                    &nbsp;&nbsp;location: <span class="highlight">"Taipei, Taiwan"</span>,<br>
+                    &nbsp;&nbsp;core_stack: [<span class="highlight">"TypeScript"</span>, <span class="highlight">"React"</span>, <span class="highlight">"Node.js"</span>, <span class="highlight">"Python"</span>],<br>
+                    &nbsp;&nbsp;interests: [<span class="highlight">"Retro Tech"</span>, <span class="highlight">"80s Synthwave"</span>, <span class="highlight">"UI Architecture"</span>]<br>
+                    };
+                </p>
+            </section>
+
+            <hr class="divider">
+
+            <!-- Featured Projects Section -->
+            <section>
+                <h2 class="section-title">
+                    <span>&gt;</span> SELECTED_PROJECTS.dir
+                </h2>
+                
+                <div class="grid">
+                    <!-- Card 1 -->
+                    <div class="card">
+                        <h3>01. NEON_DRIVE</h3>
+                        <p>一個基於 Three.js 的 3D 復古賽車網頁遊戲，帶有動態 Sunset 漸層與 Synthwave 節奏同步。</p>
+                        <span class="tag">WebGL</span>
+                        <span class="tag">Three.js</span>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="card">
+                        <h3>02. MIDNIGHT_FM</h3>
+                        <p>專為 80 年代日本流行樂迷設計的線上 Radio 播放器，內建 CRT 螢幕等化器視覺化效果。</p>
+                        <span class="tag">React</span>
+                        <span class="tag">Web Audio API</span>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="card">
+                        <h3>03. CYBER_DB</h3>
+                        <p>高效率分散式資料庫查詢 CLI 工具，具備極簡色彩控制台與自訂指令指令庫。</p>
+                        <span class="tag">Go</span>
+                        <span class="tag">CLI</span>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- Contact Section -->
+            <section>
+                <h2 class="section-title">
+                    <span>&gt;</span> CONNECT_SYSTEM.sh
+                </h2>
+                <p class="comment">// Ready to collaborate or share a retro playlist?</p>
+                <p style="margin-top: 10px;">
+                    Send ping to: <span class="highlight">your.email@example.com</span>
+                </p>
+
+                <div class="social-links">
+                    <a href="#" target="_blank">[GitHub]</a>
+                    <a href="#" target="_blank">[LinkedIn]</a>
+                    <a href="#" target="_blank">[X/Twitter]</a>
+                    <a href="#" target="_blank">[Spotify]</a>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</body>
+</html>

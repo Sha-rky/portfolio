@@ -9,26 +9,43 @@ export interface Project {
     liveUrl?: string;
 }
 
-export const projects: Project[] = [
+export const defaultProjects: Project[] = [
     {
         id: "project-1",
-        title: "專案一",
-        description: "這是專案一的描述。您可以在此加入更多詳細資訊。",
-        imageUrl: "/images/projects/project1.jpg",
-        content: "專案一的詳細內容...",
-        technologies: ["React", "TypeScript", "Tailwind CSS"],
-        githubUrl: "https://github.com/yourusername/project1",
-        liveUrl: "https://project1.com"
+        title: "News Recommender System",
+        description: "A news recommender system based on the NRMS-BERT model, following the methodology presented in the paper arXiv:2104.07413.",
+        imageUrl: "/tsne.png",
+        technologies: ["PyTorch", "HuggingFace"],
+        githubUrl: "#",
+        liveUrl: "#"
     },
     {
         id: "project-2",
-        title: "專案二",
-        description: "這是專案二的描述。您可以在此加入更多詳細資訊。",
-        imageUrl: "/images/projects/project2.jpg",
-        content: "專案二的詳細內容...",
-        technologies: ["Next.js", "Node.js", "MongoDB"],
-        githubUrl: "https://github.com/yourusername/project2",
-        liveUrl: "https://project2.com"
+        title: "Snake RL",
+        description: "Using reinforcement learning to train on the Snake game.",
+        imageUrl: "/snake.gif",
+        technologies: ["PyTorch", "Pygame", "Gymnasium"],
+        githubUrl: "#",
+        liveUrl: "#"
+    },
+    {
+        id: "project-3",
+        title: "Automation Bot",
+        description: "Built an automation bot deployed on Azure, using Discord and Line APIs for job scraping, music playback.",
+        imageUrl: "/chickpt.png",
+        technologies: ["Selenium", "Discord.py", "Line-bot-sdk", "Azure"],
+        githubUrl: "#",
+        liveUrl: "#"
+    },
+    {
+        id: "project-4",
+        title: "GraphRAG Chatbot for Podcast QA",
+        description: "Trained a GraphRAG-based chatbot on the Gooaye(股癌) Podcast Transcripts to enable contextual Q&A, referencing arXiv:2404.16130.",
+        imageUrl: "/graphrag.png",
+        technologies: ["GraphRAG", "Selenium", "OpenAI API", "Whisper"],
+        githubUrl: "#",
+        liveUrl: "#"
     }
-    // 您可以繼續添加更多專案...
-]; 
+];
+
+export const projects = defaultProjects;

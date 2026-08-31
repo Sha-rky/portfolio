@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>矩陣文字雨</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        // 設置畫布大小為全屏
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 字符集
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+{}[]|;:,.<>?';
+        const chineseChars = '程式設計師全端工程師人工智慧網頁開發資料分析系統架構師DevOps雲端運算區塊鏈';
+        const allChars = chars + chineseChars;
+
+        // 設置字體大小和列數
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        // 每列的當前位置
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        // 顏色設置
+        const colors = {
+            main: '#0F0',
+            glow: '#0F0',
+            trail: '#0A0'
+        };
+
+        // 繪製文字雨
+        function draw() {
+            // 設置半透明黑色背景，形成拖尾效果
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 設置文字顏色和字體
+            ctx.fillStyle = colors.main;
+            ctx.font = fontSize + 'px monospace';
+
+            // 為每列繪製字符
+            for (let i = 0; i < drops.length; i++) {
+                // 隨機選擇字符
+                const char = allChars[Math.floor(Math.random() * allChars.length)];
+                
+                // 繪製主字符
+                ctx.fillStyle = colors.main;
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                // 添加發光效果
+                ctx.shadowColor = colors.glow;
+                ctx.shadowBlur = 10;
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                ctx.shadowBlur = 0;
+
+                // 當字符到達底部或隨機重置時
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                // 增加下落速度
+                drops[i]++;
+            }
+        }
+
+        // 處理窗口大小改變
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const columns = canvas.width / fontSize;
+            drops.length = 0;
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+        });
+
+        // 每50毫秒更新一次動畫
+        setInterval(draw, 50);
+    </script>
+</body>
+</html>

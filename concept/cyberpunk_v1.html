@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Cyberpunk City Pop ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        :root {
+            --neon-pink: #ff2e88;
+            --neon-blue: #00f3ff;
+            --neon-yellow: #fff600;
+            --dark-bg: #0a0a0a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 
+                0 0 5px var(--neon-pink),
+                0 0 10px var(--neon-pink),
+                0 0 20px var(--neon-pink);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .cyber-cat {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .cat-face {
+            width: 100%;
+            height: 100%;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 
+                0 0 10px var(--neon-blue),
+                0 0 20px var(--neon-blue);
+        }
+
+        .cat-ears {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 60px solid var(--neon-pink);
+        }
+
+        .cat-eyes {
+            position: absolute;
+            top: 40%;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .eye {
+            width: 20px;
+            height: 20px;
+            background: var(--neon-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-yellow);
+        }
+
+        .grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(transparent 0%, rgba(0, 243, 255, 0.2) 2%, transparent 3%),
+                linear-gradient(90deg, transparent 0%, rgba(0, 243, 255, 0.2) 2%, transparent 3%);
+            background-size: 50px 50px;
+            pointer-events: none;
+            animation: grid-move 20s linear infinite;
+        }
+
+        .city-pop-text {
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 5px var(--neon-yellow);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 5px var(--neon-pink),
+                    0 0 10px var(--neon-pink),
+                    0 0 20px var(--neon-pink);
+            }
+            to {
+                text-shadow: 
+                    0 0 10px var(--neon-pink),
+                    0 0 20px var(--neon-pink),
+                    0 0 30px var(--neon-pink);
+            }
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        .neon-button {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            font-family: 'Press Start 2P', cursive;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            cursor: pointer;
+            text-shadow: 0 0 5px var(--neon-blue);
+            box-shadow: 0 0 5px var(--neon-blue);
+            transition: all 0.3s ease;
+        }
+
+        .neon-button:hover {
+            background: var(--neon-blue);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid"></div>
+    <div class="container">
+        <h1>✨ Cyberpunk City Pop ✨</h1>
+        <div class="cyber-cat">
+            <div class="cat-ears"></div>
+            <div class="cat-face">
+                <div class="cat-eyes">
+                    <div class="eye"></div>
+                    <div class="eye"></div>
+                </div>
+            </div>
+        </div>
+        <p class="city-pop-text">Welcome to the Neon City</p>
+        <button class="neon-button">Enter the Matrix</button>
+    </div>
+
+    <script>
+        document.querySelector('.neon-button').addEventListener('click', () => {
+            document.body.style.animation = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.animation = 'glow 2s ease-in-out infinite alternate';
+        });
+    </script>
+</body>
+</html> 

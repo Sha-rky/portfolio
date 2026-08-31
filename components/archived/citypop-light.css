@@ -1,0 +1,32 @@
+/* =========================================================================
+   [ARCHIVED] CITY POP WINDOW THEME TOKENS (Light Mode)
+   Available classes: bg-window-*, text-window-*, border-window-*, etc.
+   ========================================================================= */
+/* Frame & Shadows */
+--color-window-border: #1e1035;       /* Deep Ink Violet (Window Frame 2px Border) */
+--color-window-shadow: #e95b9e;       /* City Pop Softened Coral Pink Shadow */
+
+/* Surfaces & Canvas - Toned down slightly to remove high-contrast glare */
+--color-window-canvas: #ece5f6;       /* Gentle Lilac Canvas (Slightly reduced luminance) */
+--color-window-card: #ddd3ef;         /* Soft Pastel Lilac Widget Surface */
+--color-window-badge: #d7c8ee;        /* Soft Lavender Badge */
+
+/* Title Bar / Nav */
+--color-window-titlebar: rgb(158 98 222); /* #9e62de - Balanced City Pop Lavender Violet */
+--color-window-title-text: #000;       /* Pure White Title Text */
+--color-window-glyph: #fde047;            /* Soft Pastel Gold Star Glyph */
+
+/* Text & Typography */
+--color-window-text-main: #271342;    /* High-contrast Ink Violet Body Text */
+--color-window-text-muted: #6b21a8;   /* Deep Lavender Subtitle / Secondary Text */
+
+/* Square Control Buttons */
+--color-window-btn-min: #4bc8df;      /* Softened Pastel Cyan Minimize */
+--color-window-btn-max: #c89df2;      /* Softened Pastel Lavender Maximize */
+--color-window-btn-close: #e95b9e;    /* Softened Pastel Coral Pink Close */
+--color-window-btn-icon: #1e1035;     /* Dark Ink Glyph for Control Buttons */
+
+/* Data & Metric Accents */
+--color-window-metric-cyan: #0891b2;  /* Vibrant Cyan Metric Value */
+--color-window-metric-pink: #db2777;  /* Vibrant Pink Metric Value */
+--color-window-metric-green: #059669; /* Vibrant Green Metric Value / Status */

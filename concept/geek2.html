@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K.T. | CityPop x Geek Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* 偏暗的紫/粉色系 City Pop 調色盤 */
+            --bg-dark: #0a0410;       /* 極暗紫黑 */
+            --grid-neon: rgba(255, 0, 127, 0.15); /* 霓虹粉網格 */
+            --text-cyan: #00e5ff;     /* 終端機青色 */
+            --text-pink: #ff007f;     /* 亮粉紅 */
+            --text-purple: #b026ff;   /* 霓虹紫 */
+            --window-bg: rgba(15, 5, 25, 0.85); /* 視窗背景 */
+            --timeline-line: #ff007f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            /* 復古紫粉網格背景 */
+            background-image: 
+                linear-gradient(transparent 95%, var(--grid-neon) 95%),
+                linear-gradient(90deg, transparent 95%, var(--grid-neon) 95%);
+            background-size: 40px 40px;
+            font-family: 'Noto Sans TC', sans-serif;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 復古 CRT 螢幕掃描線特效 (疊加在最上層) */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* 自訂滾動條 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--text-purple); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-pink); }
+
+        /* Hero 區塊 (全螢幕首頁) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'VT323', monospace;
+            font-size: 4.5rem;
+            color: var(--text-pink);
+            text-shadow: 2px 2px 0px var(--text-purple), 0 0 15px var(--text-pink);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .typewriter {
+            font-family: 'VT323', monospace;
+            font-size: 1.8rem;
+            color: var(--text-cyan);
+            border-right: 2px solid var(--text-pink);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            font-family: 'VT323', monospace;
+            color: var(--text-purple);
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* Timeline 區塊 */
+        .timeline-section {
+            padding: 100px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'VT323', monospace;
+            font-size: 2.5rem;
+            color: var(--text-cyan);
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        /* Timeline 核心架構 */
+        .timeline {
+            position: relative;
+        }
+
+        /* 中央發光垂直線 */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--text-purple);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            box-shadow: 0 0 15px var(--text-purple);
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        /* 滾動浮現動畫的 Class */
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item.left {
+            left: 0;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+        }
+
+        /* 軌跡上的發光節點 */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-dark);
+            border: 4px solid var(--text-pink);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--text-pink);
+        }
+
+        .timeline-item.right::after {
+            left: -10px;
+        }
+
+        /* Geek 終端機風格專案卡片 */
+        .project-card {
+            background: var(--window-bg);
+            border: 1px solid var(--text-purple);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(176, 38, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--text-pink);
+            border-color: var(--text-pink);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, var(--text-purple), rgba(255,0,127,0.5));
+            color: #fff;
+            padding: 6px 12px;
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--text-pink);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .date {
+            font-family: 'VT323', monospace;
+            color: var(--text-cyan);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .tags {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: 'VT323', monospace;
+            font-size: 0.9rem;
+            color: var(--text-cyan);
+            border: 1px solid var(--text-cyan);
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(0, 229, 255, 0.1);
+        }
+
+        /* RWD 響應式：手機版調整為單邊時間軸 */
+        @media screen and (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .typewriter { font-size: 1.2rem; }
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item.left, .timeline-item.right { left: 0; }
+            .timeline-item.left::after, .timeline-item.right::after { left: 21px; }
+        }
+
+        @keyframes blink { 50% { border-color: transparent; } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>K.T. PORTFOLIO</h1>
+        <div id="typewriter" class="typewriter"></div>
+        <div class="scroll-down">v SCROLL TO INITIALIZE v</div>
+    </div>
+
+    <!-- Timeline Section -->
+    <div class="timeline-section">
+        <h2 class="section-title">> EXECUTE: timeline.sh</h2>
+        
+        <div class="timeline">
+            
+            <!-- 專案 1 -->
+            <div class="timeline-item left">
+                <div class="project-card">
+                    <div class="card-header">root@KT:~/projects/cloud-infra$</div>
+                    <div class="card-body">
+                        <span class="date">2026.05 - Present</span>
+                        <h3>數位插畫與高階雲端擴充計畫</h3>
+                        <p>升級建置高達 5TB 的進階雲端儲存架構，全面優化專業數位插畫（Digital Illustration）的創作流程、資產管理與跨裝置備份系統。</p>
+                        <div class="tags">
+                            <span class="tag">#Cloud_Storage</span>
+                            <span class="tag">#Digital_Illustration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 專案 2 -->
+            <div class="timeline-item right">
+                <div class="project-card">
+                    <div class="card-header">root@KT:~/projects/mind-map$</div>
+                    <div class="card-body">
+                        <span class="date">2025.11</span>
+                        <h3>認知心理學數位視覺化</h3>
+                        <p>導入數位化架構，整合並建構認知心理學領域的全方位心智圖（Mind Maps），將複雜的學科結構轉化為具備高易讀性的互動指南。</p>
+                        <div class="tags">
+                            <span class="tag">#Cognitive_Psychology</span>
+                            <span class="tag">#Data_Viz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 專案 3 -->
+            <div class="timeline-item left">
+                <div class="project-card">
+                    <div class="card-header">root@KT:~/projects/community$</div>
+                    <div class="card-body">
+                        <span class="date">2025.11</span>
+                        <h3>南投市青年培力中心服務計畫</h3>
+                        <p>參與結構化服務專案，協助地方青年培力與社群運營，並負責排班與現場執行。</p>
+                        <div class="tags">
+                            <span class="tag">#Youth_Empowerment</span>
+                            <span class="tag">#Social_Service</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 專案 4 -->
+            <div class="timeline-item right">
+                <div class="project-card">
+                    <div class="card-header">root@KT:~/projects/e-commerce$</div>
+                    <div class="card-body">
+                        <span class="date">2025.01 - 2025.12</span>
+                        <h3>Cyber-Cosplay 線上交易平台</h3>
+                        <p>經營與維護專屬的線上數位店鋪，提供特殊主題角色制服（Cosplay）、造型假髮的展示、列表與交流交易服務。</p>
+                        <div class="tags">
+                            <span class="tag">#E-Commerce</span>
+                            <span class="tag">#Platform_Ops</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 1. 打字機特效
+        const text = "> Loading Identity... Creator / Geek / Digital Artist_";
+        const typewriterEl = document.getElementById('typewriter');
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                typewriterEl.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, Math.random() * 100 + 50);
+            }
+        }
+        setTimeout(type, 800);
+
+        // 2. 滾動顯示特效 (Intersection Observer)
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // 可選：讓它只觸發一次，避免上下滾動重複動畫
+                    // observer.unobserve(entry.target); 
+                }
+            });
+        }, {
+            threshold: 0.2 // 進入視窗 20% 時觸發動畫
+        });
+
+        timelineItems.forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
