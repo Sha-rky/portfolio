@@ -6,17 +6,24 @@ import Container from "@/components/container";
 import HeroGlitchTitle from "@/components/hero-glitch-title";
 import TextScramble from "@/components/text-scramble";
 import { defaultProjects } from "@/data/projects";
+import TerminalWindow from "./terminal-window";
+import { RetroGeekProjectCard } from "./retro-geek-card";
+import { DreamyMagicalProjectCard } from "./dreamy-magical-card";
+import MarqueePlayer from "./marquee-player";
+import VimCursor from "./vim-cursor";
 
 /**
  * Library — the components that made the cut.
  *
- * Everything shown here lives in `components/` and is styled through the
- * theme registry, so this page is the honest view of what production
- * actually renders. Unlike the other candidates it deliberately imports
- * rather than reimplements: if a component regresses, it regresses here too.
+ * Two kinds of specimen live here, kept honestly distinct:
  *
- * The page chrome itself is styled directly, per the sandbox convention —
- * only the specimens use variants.
+ * 1. Production components, imported straight from `components/` — these
+ *    are theme-driven and render exactly as the production surface does. If
+ *    one regresses, it regresses here too.
+ * 2. Sandbox pieces kept from candidates that were otherwise deleted in a
+ *    full /test clear-out. These style directly (no tv(), no registry) and
+ *    are not wired into production — they're preserved here rather than
+ *    lost when their source candidate was removed.
  */
 
 function Specimen({
@@ -37,6 +44,36 @@ function Specimen({
 				<code className="font-mono text-[11px] text-zinc-500">{source}</code>
 			</div>
 			<div className="rounded-lg border border-white/10 bg-black/40 p-6">{children}</div>
+		</section>
+	);
+}
+
+/** Specimen variant for kept sandbox pieces: the demo box itself carries the
+ * specimen's own background ("底色"), rather than the neutral bg-black/40
+ * used for production specimens, since the background is part of what's
+ * being kept here. */
+function SwatchSpecimen({
+	name,
+	source,
+	background,
+	children,
+}: {
+	name: string;
+	source: string;
+	background: string;
+	children: React.ReactNode;
+}) {
+	return (
+		<section className="space-y-3">
+			<div className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-2">
+				<h2 className="font-mono text-sm font-semibold tracking-wider text-[#ff85c2]">
+					{name}
+				</h2>
+				<code className="font-mono text-[11px] text-zinc-500">{source}</code>
+			</div>
+			<div className="rounded-lg border border-white/10 p-6" style={{ backgroundColor: background }}>
+				{children}
+			</div>
 		</section>
 	);
 }
@@ -100,6 +137,69 @@ export default function Library() {
 						no standalone appearance — see the Home route.
 					</p>
 				</Specimen>
+
+				<div className="border-t-2 border-dashed border-white/10 pt-4">
+					<p className="font-mono text-[11px] uppercase tracking-widest text-zinc-500">
+						Kept from a cleared sandbox — styled directly, not in{" "}
+						<code className="text-zinc-400">components/</code>
+					</p>
+				</div>
+
+				<Specimen name="Marquee Player" source="was: v4-playground.tsx">
+					<MarqueePlayer />
+				</Specimen>
+
+				<Specimen name="Vim Cursor" source="was: v4-playground.tsx">
+					<VimCursor />
+				</Specimen>
+
+				<SwatchSpecimen
+					name="City Pop Card — Dark"
+					source="was: v6-citypop-spec.tsx"
+					background="#000000"
+				>
+					<TerminalWindow
+						variant="citypop"
+						image="/graphrag.png"
+						title="GraphRAG Chatbot for Podcast QA"
+						description="結合 Whisper 語音轉錄與微軟 GraphRAG 實體拓撲知識圖譜架構，於萬小時語音文庫中實現跨集數概念鏈結之深度脈絡問答。"
+						tags={["Whisper", "GraphRAG", "KnowledgeGraph", "Python"]}
+					/>
+				</SwatchSpecimen>
+
+				<SwatchSpecimen
+					name="City Pop Card — Light"
+					source="was: v7-citypop-light-spec.tsx"
+					background="#ece5f6"
+				>
+					<TerminalWindow
+						variant="citypop-light"
+						image="/graphrag.png"
+						title="GraphRAG Chatbot for Podcast QA"
+						description="結合 Whisper 語音轉錄與微軟 GraphRAG 實體拓撲知識圖譜架構，於萬小時語音文庫中實現跨集數概念鏈結之深度脈絡問答。"
+						tags={["Whisper", "GraphRAG", "KnowledgeGraph", "Python"]}
+					/>
+				</SwatchSpecimen>
+
+				<SwatchSpecimen
+					name="Retro Geek Card"
+					source="was: retro-geek.tsx"
+					background="#090414"
+				>
+					<div className="max-w-md">
+						<RetroGeekProjectCard />
+					</div>
+				</SwatchSpecimen>
+
+				<SwatchSpecimen
+					name="Dreamy Magical Card"
+					source="was: dreamy-magical.tsx"
+					background="#0c051a"
+				>
+					<div className="max-w-md">
+						<DreamyMagicalProjectCard />
+					</div>
+				</SwatchSpecimen>
 			</div>
 		</div>
 	);

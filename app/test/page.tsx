@@ -2,38 +2,16 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Library from "./_candidates/library";
-import HomeCyberpunk from "./_candidates/home-cyberpunk";
-import HomeCityPop from "./_candidates/home-citypop";
-import HomeVanilla from "./_candidates/home-vanilla";
-import V1Minimal from "./_candidates/v1-minimal";
-import V2Enterprise from "./_candidates/v2-enterprise";
-import V3Accents from "./_candidates/v3-accents";
-import V4Playground from "./_candidates/v4-playground";
-import V6CityPopSpec from "./_candidates/v6-citypop-spec";
-import V7CityPopLightSpec from "./_candidates/v7-citypop-light-spec";
-import RetroGeek from "./_candidates/retro-geek";
-import DreamyMagical from "./_candidates/dreamy-magical";
 import Legacy from "./_candidates/legacy";
 
 const CANDIDATES = [
 	{ id: "library", group: "Library", label: "Kept Components", Component: Library },
-	{ id: "home-cyberpunk", group: "Home", label: "Cyberpunk", Component: HomeCyberpunk },
-	{ id: "home-citypop", group: "Home", label: "City Pop", Component: HomeCityPop },
-	{ id: "home-vanilla", group: "Home", label: "Vanilla", Component: HomeVanilla },
-	{ id: "v1", group: "Demos", label: "v1 · Minimal", Component: V1Minimal },
-	{ id: "v2", group: "Demos", label: "v2 · Enterprise", Component: V2Enterprise },
-	{ id: "v3", group: "Demos", label: "v3 · Accents", Component: V3Accents },
-	{ id: "v4", group: "Demos", label: "v4 · Playground", Component: V4Playground },
-	{ id: "v6", group: "Demos", label: "v6 · City Pop Spec (Dark)", Component: V6CityPopSpec },
-	{ id: "v7", group: "Demos", label: "v7 · City Pop Spec (Light)", Component: V7CityPopLightSpec },
-	{ id: "retro-geek", group: "Specs", label: "Retro Geek", Component: RetroGeek },
-	{ id: "dreamy-magical", group: "Specs", label: "Dreamy Magical", Component: DreamyMagical },
-	{ id: "legacy", group: "Specs", label: "Legacy Test", Component: Legacy },
+	{ id: "legacy", group: "Legacy", label: "Legacy Test", Component: Legacy },
 ] as const;
 
 type CandidateId = (typeof CANDIDATES)[number]["id"];
 
-const GROUPS = ["Library", "Home", "Demos", "Specs"] as const;
+const GROUPS = ["Library", "Legacy"] as const;
 
 /**
  * Sandbox shell.
@@ -45,6 +23,10 @@ const GROUPS = ["Library", "Home", "Demos", "Specs"] as const;
  *
  * The menu is inlined here rather than extracted: it is shell, not a
  * candidate, and `_candidates/` is reserved for pages that are in the running.
+ *
+ * Cleared down to two candidates on request: Library (which now also holds
+ * every piece worth keeping from the candidates that were removed — see its
+ * own file) and Legacy Test, kept in full and untouched.
  */
 export default function TestSPAPage() {
 	const [active, setActive] = useState<CandidateId>("library");
