@@ -39,8 +39,8 @@ export default function HomeCityPop() {
 					className="text-6xl md:text-8xl"
 					fg="#ffffff"
 					bg="#090414"
-					accentA="#b388ff"
-					accentB="#ff85c2"
+					accentA="#ff85c2"
+					accentB="#80deea"
 				/>
 
 				<p className="mt-6 text-3xl font-light text-[#80deea] md:text-5xl" style={{ fontFamily: "var(--font-orbitron)" }}>

@@ -12,20 +12,22 @@ const ROLES = ["ML Engineer", "Web Developer", "Python Developer", "Cursor user"
  * Home — Cyberpunk (candidate).
  *
  * A next-version exploration of the cyberpunk look, styled directly rather
- * than through the registry. Production's cyberpunk theme is untouched by
- * this file; nothing here is imported anywhere else.
+ * than through the registry. Colour identity matches production's actual
+ * cyberpunk theme (pink accent #ec4899, cyan reserved for the section
+ * heading only) — only layout/structure is exploratory here, not the
+ * palette. Production is untouched; nothing here is imported anywhere else.
  */
 export default function HomeCyberpunk() {
 	return (
 		<div
-			className="min-h-screen bg-[#050505] text-[#ededed]"
+			className="min-h-screen bg-[#0a0a0a] text-[#ededed]"
 			style={{ fontFamily: "var(--font-geist-sans)" }}
 		>
 			<div
 				className="pointer-events-none fixed inset-0 -z-10 opacity-40"
 				style={{
 					backgroundImage:
-						"linear-gradient(rgba(0,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,0,255,0.06) 1px, transparent 1px)",
+						"linear-gradient(rgba(236,72,153,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,234,255,0.06) 1px, transparent 1px)",
 					backgroundSize: "44px 44px",
 				}}
 			/>
@@ -39,14 +41,14 @@ export default function HomeCyberpunk() {
 					text="Ryan Luo"
 					className="text-6xl md:text-8xl"
 					fg="#ffffff"
-					bg="#050505"
-					accentA="#00eaff"
-					accentB="#ff2ad4"
+					bg="#0a0a0a"
+					accentA="#ff2a6d"
+					accentB="#ff1f71"
 				/>
 
 				<p className="mt-6 text-3xl font-light text-[#71717a] md:text-5xl" style={{ fontFamily: "var(--font-orbitron)" }}>
 					I am a&nbsp;
-					<TextScramble words={ROLES} className="text-[#00eaff]" />
+					<TextScramble words={ROLES} className="text-[#ec4899]" />
 				</p>
 			</section>
 
@@ -55,7 +57,7 @@ export default function HomeCyberpunk() {
 					<div className="text-center">
 						<h2
 							className="mb-3 text-4xl font-bold uppercase tracking-widest text-[#00eaff]"
-							style={{ fontFamily: "var(--font-dot-gothic-16)", textShadow: "-2px -2px 0 #ff2ad4" }}
+							style={{ fontFamily: "var(--font-dot-gothic-16)", textShadow: "-2px -2px 0 #ff4f9a" }}
 						>
 							Projects Showcase
 						</h2>
@@ -66,7 +68,7 @@ export default function HomeCyberpunk() {
 						{defaultProjects.map((project) => (
 							<div
 								key={project.id}
-								className="flex h-full flex-col rounded-xl border border-[#00eaff]/20 bg-[#0a0a0a]/60 p-6 transition-colors hover:border-[#00eaff]/50"
+								className="flex h-full flex-col rounded-xl border border-white/10 bg-transparent p-6 transition-colors hover:border-white/25"
 							>
 								{project.imageUrl && (
 									<div className="mb-4 overflow-hidden rounded-lg bg-black/60">
@@ -86,7 +88,7 @@ export default function HomeCyberpunk() {
 										{project.technologies.map((tech) => (
 											<span
 												key={tech}
-												className="rounded-full bg-[#00eaff]/10 px-2 py-1 font-mono text-sm text-[#00eaff]"
+												className="rounded-full bg-white/10 px-2 py-1 font-mono text-sm text-[#d1d5db]"
 											>
 												{tech}
 											</span>
