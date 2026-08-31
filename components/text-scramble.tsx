@@ -9,7 +9,7 @@ const DEFAULT_INTERVAL = 2000;
 const FLICKER_DURATION = 0.1;
 const MAX_DECODE_TIME = 1;
 
-export interface CustomTextScrambleProps {
+export interface TextScrambleProps {
     words?: string[];
     interval?: number;
     chars?: string;
@@ -49,13 +49,13 @@ const initializeCharStates = (word: string): CharState[] => {
     }));
 };
 
-export function CustomTextScramble({
+export function TextScramble({
     words = DEFAULT_WORDS,
     interval = DEFAULT_INTERVAL,
     chars = DEFAULT_CHARS,
     className = "",
     style
-}: CustomTextScrambleProps) {
+}: TextScrambleProps) {
     const [display, setDisplay] = useState<string>(words[0] || "");
     const wordIndex = useRef<number>(0);
     const timeline = useRef<gsap.core.Timeline | null>(null);
@@ -133,4 +133,4 @@ export function CustomTextScramble({
     );
 }
 
-export default CustomTextScramble;
+export default TextScramble;

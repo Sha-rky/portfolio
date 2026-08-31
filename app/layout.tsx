@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Orbitron, DotGothic16, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { CustomNavbar } from "@/components/custom-navbar";
+import { Navbar } from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const geist = Geist({
@@ -48,15 +48,21 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
-			<body className={`${geist.className} ${orbitron.variable} ${dotGothic16.variable} ${geistMono.variable} min-h-screen transition-colors duration-500`}>
+		// Font variables live on <html> so the token layer in globals.css, which
+		// is scoped to :root, can resolve them (CSS variables inherit downward).
+		<html
+			lang="en"
+			suppressHydrationWarning
+			className={`${geist.variable} ${orbitron.variable} ${dotGothic16.variable} ${geistMono.variable}`}
+		>
+			<body className="min-h-screen font-sans transition-colors duration-500">
 				<ThemeProvider
-					attribute="class"
+					attribute="data-theme"
 					defaultTheme="cyberpunk"
 					themes={["cyberpunk", "citypop", "vanilla"]}
 					enableSystem={false}
 				>
-					<CustomNavbar />
+					<Navbar />
 					{children}
 				</ThemeProvider>
 			</body>

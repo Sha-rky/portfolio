@@ -3,7 +3,7 @@
 import React, { ReactNode } from "react";
 import Image from "next/image";
 
-export interface CustomTerminalWindowProps {
+export interface TerminalWindowProps {
     title?: string;
     image?: string | { src: string; alt?: string };
     description?: string | ReactNode;
@@ -15,7 +15,7 @@ export interface CustomTerminalWindowProps {
     isDark?: boolean;
 }
 
-export function CustomTerminalWindow({
+export function TerminalWindow({
     title,
     image,
     description,
@@ -25,7 +25,7 @@ export function CustomTerminalWindow({
     hoverScale = true,
     variant = "auto",
     isDark = true
-}: CustomTerminalWindowProps) {
+}: TerminalWindowProps) {
     const isCyberpunk = variant === "cyberpunk" || variant === "citypop" || (variant === "auto" && isDark);
 
     const imageSrc = typeof image === "string" ? image : image?.src;
@@ -165,4 +165,4 @@ export function CustomTerminalWindow({
     );
 }
 
-export default CustomTerminalWindow;
+export default TerminalWindow;

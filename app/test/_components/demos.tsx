@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { CustomTerminalWindow as TerminalWindow } from "@/components/custom-terminal-window";
+import { TerminalWindow } from "@/components/terminal-window";
 
 // =========================================================================
 // SHARED PROFILE DATA

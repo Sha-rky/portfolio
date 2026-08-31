@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 
-export interface CustomHeroGlitchTitleProps {
+export interface HeroGlitchTitleProps {
     text: string;
     className?: string;
 }
 
-export function CustomHeroGlitchTitle({ text, className = "" }: CustomHeroGlitchTitleProps) {
+export function HeroGlitchTitle({ text, className = "" }: HeroGlitchTitleProps) {
     const [, setNoiseAnim] = useState(false);
 
     useEffect(() => {
@@ -16,8 +16,8 @@ export function CustomHeroGlitchTitle({ text, className = "" }: CustomHeroGlitch
 
     return (
         <>
-            <h1 
-                className={`glitch-title relative text-6xl md:text-8xl font-bold text-white tracking-wider ${className}`} 
+            <h1
+                className={`glitch-title relative font-display text-6xl md:text-8xl font-bold text-foreground tracking-wider ${className}`}
                 data-text={text}
             >
                 {text}
@@ -29,7 +29,7 @@ export function CustomHeroGlitchTitle({ text, className = "" }: CustomHeroGlitch
                     content: attr(data-text);
                     position: absolute;
                     top: 0;
-                    color: #ffffff;
+                    color: var(--foreground);
                     background: transparent;
                     overflow: hidden;
                     pointer-events: none;
@@ -37,13 +37,13 @@ export function CustomHeroGlitchTitle({ text, className = "" }: CustomHeroGlitch
 
                 .glitch-title::before {
                     left: -2px;
-                    text-shadow: 2px 0 #ff2a6d;
+                    text-shadow: 2px 0 var(--accent);
                     animation: noise-anim 2s infinite linear alternate-reverse;
                 }
 
                 .glitch-title::after {
                     left: 2px;
-                    text-shadow: -2px 0 #ff1f71;
+                    text-shadow: -2px 0 var(--secondary);
                     animation: noise-anim-2 3s infinite linear alternate-reverse;
                 }
 
@@ -69,4 +69,4 @@ export function CustomHeroGlitchTitle({ text, className = "" }: CustomHeroGlitch
     );
 }
 
-export default CustomHeroGlitchTitle;
+export default HeroGlitchTitle;

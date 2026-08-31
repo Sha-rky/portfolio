@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export function CustomNeonBackground() {
+export function NeonBackground() {
     const animationRef = useRef<gsap.core.Tween | null>(null);
 
     useEffect(() => {
@@ -56,4 +56,4 @@ export function CustomNeonBackground() {
     );
 }
 
-export default CustomNeonBackground;
+export default NeonBackground;

@@ -5,11 +5,13 @@ import ComponentsDemo from "./_components/components-demo";
 import MagicalDemo from "./_components/components-demo-magical";
 import Demos from "./_components/demos";
 import LegacyTest from "./_components/legacy-test";
+import HomePreview from "./_components/home-preview";
 
 export default function TestSPAPage() {
-    const [activeTab, setActiveTab] = useState<"demos" | "components" | "magical" | "legacy">("demos");
+    const [activeTab, setActiveTab] = useState<"home" | "demos" | "components" | "magical" | "legacy">("home");
 
     const tabs = [
+        { id: "home", label: "Home Preview" },
         { id: "demos", label: "Demos" },
         { id: "components", label: "Components Demo" },
         { id: "magical", label: "Magical Demo" },
@@ -44,6 +46,12 @@ export default function TestSPAPage() {
 
             {/* Main Content Area */}
             <main className="flex-1 w-full relative">
+                {activeTab === "home" && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <HomePreview />
+                    </div>
+                )}
+
                 {activeTab === "demos" && (
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <Demos />
