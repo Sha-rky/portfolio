@@ -1,7 +1,7 @@
 "use client";
 
-import { useThemeMode, VALID_THEMES } from "@/lib/hooks/use-theme-mode";
-import { themeToggleVariants } from "@/components/variants/theme-toggle";
+import { useThemeMode, THEMES } from "@/app/test/_components/ui/theme-provider";
+import { themeToggleVariants } from "@/app/test/_components/ui/variants/theme-toggle";
 
 const THEME_LABELS: Record<string, string> = {
 	cyberpunk: "Cyberpunk",
@@ -23,7 +23,7 @@ export function ThemeToggle() {
 
 	return (
 		<div className={container()}>
-			{VALID_THEMES.map((id) => (
+			{THEMES.map((id) => (
 				<button
 					key={id}
 					type="button"

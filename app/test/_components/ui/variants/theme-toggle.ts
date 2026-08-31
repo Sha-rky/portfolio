@@ -9,7 +9,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 export const themeToggleVariants = tv({
 	slots: {
 		container:
-			"flex items-center gap-1 p-1 font-mono text-xs rounded-control border-theme border-border bg-surface-raised shadow-control transition-all duration-300",
+			"flex items-center gap-1 p-1 font-mono text-xs rounded-control theme-border border-border bg-surface-raised shadow-control transition-all duration-300",
 		button:
 			"px-2.5 py-1 rounded-control capitalize cursor-pointer select-none transition-all duration-200",
 	},

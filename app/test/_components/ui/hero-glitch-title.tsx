@@ -29,7 +29,7 @@ export function HeroGlitchTitle({ text, className = "" }: HeroGlitchTitleProps) 
                     content: attr(data-text);
                     position: absolute;
                     top: 0;
-                    color: var(--foreground);
+                    color: var(--theme-fg);
                     background: transparent;
                     overflow: hidden;
                     pointer-events: none;
@@ -37,13 +37,13 @@ export function HeroGlitchTitle({ text, className = "" }: HeroGlitchTitleProps) 
 
                 .glitch-title::before {
                     left: -2px;
-                    text-shadow: 2px 0 var(--accent);
+                    text-shadow: 2px 0 var(--theme-accent);
                     animation: noise-anim 2s infinite linear alternate-reverse;
                 }
 
                 .glitch-title::after {
                     left: 2px;
-                    text-shadow: -2px 0 var(--secondary);
+                    text-shadow: -2px 0 var(--theme-secondary);
                     animation: noise-anim-2 3s infinite linear alternate-reverse;
                 }
 

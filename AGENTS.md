@@ -33,42 +33,57 @@ This document outlines the architectural rules, coding standards, and file namin
 ### A. Reserved Routes
 
 - **`app/page.tsx` — DO NOT MODIFY.** This file is reserved as a future extension point (i18n entry, landing/marketing page, A/B routing). Leave it as the minimal root stub. Never move portfolio content into it, never delete it, and never refactor it as a side effect of other work. Changing it requires an explicit, direct request naming this file.
-- **Main Portfolio Route**: Consolidated in `app/home/page.tsx`. Do NOT split themes into separate routes (`/home/cyberpunk`, `/home/vanilla`, etc.). All themes are rendered through the single route `/home`.
+- **`app/home/page.tsx` and `app/layout.tsx` — PRODUCTION SURFACE, fixed single theme.** These match main and must stay that way. No theme switcher, no `data-theme`, no token-layer utilities. Do not "improve", restyle, or refactor them as a side effect of sandbox work; changing them requires an explicit, direct request naming the file.
+- **Production components** (`components/*.tsx`) belong to that fixed-theme surface and follow the same rule.
 
 ### B. `app/test` — UI / Component Sandbox
 
 - **`app/test/` is the sandbox for all UI and component experimentation.** Every visual experiment, component demo, theme comparison, and design spike belongs here — never in `app/home` and never in `app/page.tsx`.
 - Demo components live in `app/test/_components/`. The underscore prefix keeps the folder private to the route (Next.js does not treat `_components` as a route segment).
-- `app/test/page.tsx` is a tab-based SPA shell; register each new demo as a tab there rather than creating additional `app/test/*` routes.
-- Content in `app/test` is **disposable by definition**. It is not production surface, is excluded from portfolio navigation, and may be deleted once a component graduates into `components/`.
-- Promotion path: prototype in `app/test/_components/` → stabilize → extract into `components/` following the naming rules in section 1 → compose into `app/home/page.tsx`.
+- The themed, token-driven component set lives in `app/test/_components/ui/` (with its `variants/`). It is sandbox-only and deliberately kept out of `components/`.
+- `app/test/layout.tsx` mounts the sandbox `ThemeProvider`. **Theme switching exists only here.** It applies `data-theme` to a wrapper *inside* this subtree — never to `<html>` — so the production surface can never inherit it.
+- `app/test/page.tsx` is a tab-based SPA shell; register each new demo as a tab there rather than creating additional `app/test/*` routes. Its toolbar sits at `top-14` to clear the fixed production navbar.
+- Content in `app/test` is **disposable by definition**. It is not production surface and is excluded from portfolio navigation.
+- Promotion path: prototype in `app/test/_components/` → stabilize → extract into `components/` following the naming rules in section 1 → compose into `app/home/page.tsx`. Promotion is an explicit, requested step, never automatic.
 
 ---
 
 ## 3. Theming & Component Architecture (Token-Driven, Unstyled-First)
 
-The architecture has three layers. **Only the token layer knows what a theme looks like.** Adding a fourth theme must require editing exactly one file: `app/globals.css`.
+**This entire section applies to the `/test` sandbox only.** The production surface (`app/home`, `app/layout.tsx`, `components/`) is fixed-theme and uses none of it.
+
+**Only the token layer knows what a theme looks like.** Adding a fourth theme must require editing exactly one file: `app/globals.css`.
 
 | Layer | Location | Responsibility | Knows the theme? |
 |---|---|---|---|
 | **Token** | `app/globals.css` | Defines every colour, radius, shadow, and display font per theme as CSS variables | ✅ the only place |
-| **Variants** | `components/variants/*.ts` | Maps semantic tokens onto Tailwind classes via `tv()` | ❌ |
-| **Component** | `components/*.tsx` | Semantic DOM skeleton and behaviour | ❌ (see the one exception below) |
+| **Variants** | `app/test/_components/ui/variants/*.ts` | Maps semantic tokens onto Tailwind classes via `tv()` | ❌ |
+| **Component** | `app/test/_components/ui/*.tsx` | Semantic DOM skeleton and behaviour | ❌ (see the one exception below) |
 
-### A. Global Theme Management (`next-themes`)
-- `<ThemeProvider>` wraps the root layout with `attribute="data-theme"` (not `class`), `defaultTheme="cyberpunk"`, `enableSystem={false}`.
-- Supported themes: `cyberpunk`, `citypop`, `vanilla`. The list is defined once in `lib/hooks/use-theme-mode.ts` as `VALID_THEMES`; never re-declare it inline in a component.
-- Theme switching is in-memory via `useTheme()`, synced to `localStorage` (zero FOUC, no full-page reloads).
-- **Font variables must be declared on `<html>`, not `<body>`.** The token layer is scoped to `:root`, and CSS variables only inherit downward — putting `next/font` variables on `<body>` makes them invisible to `:root` and silently breaks per-theme fonts.
+### A. Sandbox Theme Management
+- The provider is **hand-rolled**, in `app/test/_components/ui/theme-provider.tsx` — deliberately *not* `next-themes`.
+  - `next-themes` always writes its attribute to `<html>`, which the root layout owns. A sandbox feature must not mutate the production document element; doing so both leaked themes into `/home` and forced `suppressHydrationWarning` onto the root layout.
+  - Instead the provider renders `<div data-theme={theme} className="contents">`. `display: contents` keeps it out of layout while custom properties still inherit normally.
+- Supported themes are declared once as `THEMES` in that file; never re-declare the list inline.
+- Choice persists to `localStorage` under `sandbox-theme`, read after mount so server and client agree on first paint. Every access is wrapped in `try/catch` (private mode can throw).
 
 ### B. Token Layer (`app/globals.css`)
-- Semantic tokens only. Components must never see a literal colour.
+The file has two clearly separated halves; keep them separate.
+
+1. **Production layer** — the original `:root` values, `font-cyberpunk`/`font-pixel` mappings, and the `body` rule. `/home` depends on these.
+2. **Token layer** — every custom property namespaced `--theme-*`, scoped to `[data-theme="..."]`.
+
+- **The token layer must never redefine `--background` or `--foreground`.** `body` reads those, so redefining them would repaint `/home` the moment a theme is picked in `/test`.
+- Semantic tokens only; components never see a literal colour.
   - Colours: `background`, `foreground`, `muted`, `surface`, `surface-raised`, `border`, `border-strong`, `accent`, `accent-foreground`, `secondary`
   - Geometry: `radius-card`, `radius-control`, `radius-tag`
   - Effects: `shadow-card`, `shadow-card-hover`, `shadow-control`
   - Type: `font-display` (theme-dependent), `font-sans`, `font-mono`, `font-pixel`
-  - Custom utilities: `glow-accent`, `border-theme`, `blur-surface`
-- Each theme is one `[data-theme="..."]` block. `:root` carries the default (`cyberpunk`) values.
+  - Custom utilities: `glow-accent`, `theme-border`, `blur-surface`
+
+**Two Tailwind v4 traps worth remembering:**
+- `@theme inline` does **not** accept a nested `var()` fallback (`var(--a, var(--b))`) — the utility silently fails to generate. Give the variable a default in a `:root` block instead.
+- Name custom utilities clear of Tailwind's own prefixes. `border-theme` was silently dropped because `tailwind-merge` grouped it with `border-border` as conflicting border utilities; renaming it `theme-border` fixed it.
 
 ### C. Multi-Slot Styling (`tailwind-variants`)
 - Use `tv()` with `slots` for component styling; export as `<name>Variants` plus its `VariantProps` type.
@@ -87,4 +102,4 @@ const useGlitchTitle = theme !== "vanilla";
 const color = theme === "vanilla" ? "text-zinc-900" : "text-pink-500";
 ```
 
-Every such use must carry a comment explaining why it is structural. Current legitimate cases: the glitch title in `hero.tsx`, the retro window chrome in `card.tsx`, and the ambient glow in the home composition.
+Every such use must carry a comment explaining why it is structural. Current legitimate cases: the glitch title in `ui/hero.tsx`, the retro window chrome in `ui/card.tsx`, and the ambient glow in `home-preview.tsx`.

@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { useThemeMode } from "@/lib/hooks/use-theme-mode";
-import { Hero } from "@/components/hero";
-import { Grid } from "@/components/grid";
-import { NeonBackground } from "@/components/neon-background";
+import { useThemeMode } from "@/app/test/_components/ui/theme-provider";
+import { Hero } from "@/app/test/_components/ui/hero";
+import { Grid } from "@/app/test/_components/ui/grid";
+import { NeonBackground } from "@/app/test/_components/ui/neon-background";
 
 /**
  * HomePreview

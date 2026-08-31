@@ -1,44 +1,25 @@
-"use client";
+import HeroGlitchTitle from "./fragments/hero-glitch-title";
+import HeroScrambleText from "./fragments/ScrambleText";
+import Container from "./container";
+export default function Hero() {
+    return (
+        <Container className="font-cyberpunk h-screen flex flex-col justify-center">
+            <div>
+                <p className="text-zinc-500 text-5xl mb-8 font-light">
+                    My name is
+                </p>
+                <HeroGlitchTitle text="Ryan Luo"/>
+                <p className="text-zinc-500 text-5xl mt-8 font-light">
+                    I am a&nbsp;
+                    <HeroScrambleText words={[
+                        'ML Engineer',
+                        'Web Developer',
+                        'Python Developer',
+                        'Cursor user',
+                    ]} className="text-pink-500"/>
+                </p>
 
-import React from "react";
-import { useThemeMode } from "@/lib/hooks/use-theme-mode";
-import { Container } from "@/components/container";
-import { HeroGlitchTitle } from "@/components/hero-glitch-title";
-import { TextScramble } from "@/components/text-scramble";
-import { heroVariants } from "@/components/variants/hero";
-
-export interface HeroProps {
-	className?: string;
+            </div>
+        </Container>
+    );
 }
-
-const ROLES = ["ML Engineer", "Web Developer", "Python Developer", "Cursor user"];
-
-export function Hero({ className = "" }: HeroProps) {
-	// Structural-only: the glitch treatment is an effect the vanilla theme opts
-	// out of entirely. Colours and type come from the token layer.
-	const { theme } = useThemeMode();
-	const useGlitchTitle = theme !== "vanilla";
-
-	const { container, wrapper, intro, title, role, scramble } = heroVariants();
-
-	return (
-		<section className={container({ className })}>
-			<Container className={wrapper()}>
-				<p className={intro()}>My name is</p>
-
-				{useGlitchTitle ? (
-					<HeroGlitchTitle text="Ryan Luo" />
-				) : (
-					<h1 className={title()}>Ryan Luo</h1>
-				)}
-
-				<div className={role()}>
-					<span>I am a&nbsp;</span>
-					<TextScramble words={ROLES} className={scramble()} />
-				</div>
-			</Container>
-		</section>
-	);
-}
-
-export default Hero;

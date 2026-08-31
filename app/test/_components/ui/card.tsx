@@ -2,9 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { useThemeMode } from "@/lib/hooks/use-theme-mode";
+import { useThemeMode } from "@/app/test/_components/ui/theme-provider";
 import { Project } from "@/data/projects";
-import { cardVariants } from "@/components/variants/card";
+import { cardVariants } from "@/app/test/_components/ui/variants/card";
 
 export interface CardProps {
 	project: Project;
@@ -27,13 +27,13 @@ export function Card({ project, className = "" }: CardProps) {
 						&lt;/&gt;
 					</span>
 					<div className="flex items-center gap-1.5 shrink-0 pointer-events-none">
-						<div className="w-4 h-4 flex items-center justify-center bg-secondary border border-background shadow-[1px_1px_0px_var(--background)]">
+						<div className="w-4 h-4 flex items-center justify-center bg-secondary border border-background shadow-[1px_1px_0px_var(--theme-bg)]">
 							<span className="w-1.5 h-[2px] bg-background translate-y-0.5" />
 						</div>
-						<div className="w-4 h-4 flex items-center justify-center bg-border border border-background shadow-[1px_1px_0px_var(--background)]">
+						<div className="w-4 h-4 flex items-center justify-center bg-border border border-background shadow-[1px_1px_0px_var(--theme-bg)]">
 							<span className="w-1.5 h-1.5 border-[1.5px] border-background" />
 						</div>
-						<div className="w-4 h-4 flex items-center justify-center bg-accent border border-background shadow-[1px_1px_0px_var(--background)]">
+						<div className="w-4 h-4 flex items-center justify-center bg-accent border border-background shadow-[1px_1px_0px_var(--theme-bg)]">
 							<span className="font-bold text-[10px] text-accent-foreground leading-none">✕</span>
 						</div>
 					</div>

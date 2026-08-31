@@ -1,20 +1,10 @@
-import React from "react";
-import { cn } from "@/lib/utils";
+import { type ComponentPropsWithoutRef } from 'react'
 
-export interface ContainerProps {
-	children: React.ReactNode;
-	className?: string;
-}
-
-/**
- * Layout-only wrapper: width and horizontal rhythm, no colour or type.
- */
-export function Container({ children, className }: ContainerProps) {
+export default function Container(props: ComponentPropsWithoutRef<'main'>) {
+	const { children, className } = props
 	return (
-		<div className={cn("max-w-6xl mx-auto px-4 md:px-8 w-full", className)}>
+		<main {...props} className={`container mx-auto max-w-7xl ${className}`}>
 			{children}
-		</div>
-	);
-}
-
-export default Container;
+		</main>
+	)
+};

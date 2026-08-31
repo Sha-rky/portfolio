@@ -6,6 +6,7 @@ import MagicalDemo from "./_components/components-demo-magical";
 import Demos from "./_components/demos";
 import LegacyTest from "./_components/legacy-test";
 import HomePreview from "./_components/home-preview";
+import { ThemeToggle } from "./_components/ui/theme-toggle";
 
 export default function TestSPAPage() {
     const [activeTab, setActiveTab] = useState<"home" | "demos" | "components" | "magical" | "legacy">("home");
@@ -20,10 +21,11 @@ export default function TestSPAPage() {
 
     return (
         <div className="min-h-screen bg-black/95 text-white flex flex-col">
-            {/* Top Navigation Bar */}
-            <nav className="sticky top-0 z-50 bg-[#0e0919]/90 backdrop-blur-md border-b border-[#b388ff]/20">
+            {/* Sandbox toolbar. `top-14` clears the fixed production navbar
+                that the root layout renders on every route. */}
+            <nav className="sticky top-14 z-50 bg-[#0e0919]/90 backdrop-blur-md border-b border-[#b388ff]/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-center h-16">
+                    <div className="flex items-center justify-between gap-4 h-16">
                         <div className="flex space-x-2 md:space-x-4 overflow-x-auto no-scrollbar py-2">
                             {tabs.map((tab) => (
                                 <button
@@ -31,14 +33,19 @@ export default function TestSPAPage() {
                                     onClick={() => setActiveTab(tab.id as typeof activeTab)}
                                     className={`
                                         px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 font-mono tracking-wider whitespace-nowrap
-                                        ${activeTab === tab.id 
-                                            ? "bg-gradient-to-r from-[#b388ff]/20 to-[#ff85c2]/20 text-[#ff85c2] border border-[#ff85c2]/50 shadow-[0_0_15px_rgba(255,133,194,0.3)]" 
+                                        ${activeTab === tab.id
+                                            ? "bg-gradient-to-r from-[#b388ff]/20 to-[#ff85c2]/20 text-[#ff85c2] border border-[#ff85c2]/50 shadow-[0_0_15px_rgba(255,133,194,0.3)]"
                                             : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"}
                                     `}
                                 >
                                     {tab.label}
                                 </button>
                             ))}
+                        </div>
+
+                        {/* Theme switching lives here only — production is fixed-theme. */}
+                        <div className="shrink-0">
+                            <ThemeToggle />
                         </div>
                     </div>
                 </div>

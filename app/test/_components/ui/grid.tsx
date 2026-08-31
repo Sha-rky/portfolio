@@ -2,9 +2,9 @@
 
 import React from "react";
 import { Project, defaultProjects } from "@/data/projects";
-import { Container } from "@/components/container";
-import { Card } from "@/components/card";
-import { gridVariants } from "@/components/variants/grid";
+import { Container } from "@/app/test/_components/ui/container";
+import { Card } from "@/app/test/_components/ui/card";
+import { gridVariants } from "@/app/test/_components/ui/variants/grid";
 
 export interface GridProps {
 	projects?: Project[];
