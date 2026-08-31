@@ -2,6 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Library from "./_candidates/library";
+import HomeCyberpunk from "./_candidates/home-cyberpunk";
+import HomeCityPop from "./_candidates/home-citypop";
+import HomeVanilla from "./_candidates/home-vanilla";
 import V1Minimal from "./_candidates/v1-minimal";
 import V2Enterprise from "./_candidates/v2-enterprise";
 import V3Accents from "./_candidates/v3-accents";
@@ -13,6 +16,9 @@ import Legacy from "./_candidates/legacy";
 
 const CANDIDATES = [
 	{ id: "library", group: "Library", label: "Kept Components", Component: Library },
+	{ id: "home-cyberpunk", group: "Home", label: "Cyberpunk", Component: HomeCyberpunk },
+	{ id: "home-citypop", group: "Home", label: "City Pop", Component: HomeCityPop },
+	{ id: "home-vanilla", group: "Home", label: "Vanilla", Component: HomeVanilla },
 	{ id: "v1", group: "Demos", label: "v1 · Minimal", Component: V1Minimal },
 	{ id: "v2", group: "Demos", label: "v2 · Enterprise", Component: V2Enterprise },
 	{ id: "v3", group: "Demos", label: "v3 · Accents", Component: V3Accents },
@@ -25,7 +31,7 @@ const CANDIDATES = [
 
 type CandidateId = (typeof CANDIDATES)[number]["id"];
 
-const GROUPS = ["Library", "Demos", "Specs"] as const;
+const GROUPS = ["Library", "Home", "Demos", "Specs"] as const;
 
 /**
  * Sandbox shell.
