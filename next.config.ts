@@ -1,15 +1,15 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === 'production';
-
 const nextConfig: NextConfig = {
-    basePath: isProd ? '/portfolio' : '',
-    assetPrefix: isProd ? '/portfolio/' : '',
-    output: 'export', // static export
-    distDir: 'out', // output directory
-    images: {
-        unoptimized: true,
-    },
+	async redirects() {
+		return [
+			{
+				source: "/",
+				destination: "/home",
+				permanent: true,
+			},
+		];
+	},
 };
 
 export default nextConfig;
