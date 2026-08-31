@@ -6,6 +6,8 @@ import { RetroGeekProjectCard } from "./retro-geek-card";
 import { DreamyMagicalProjectCard } from "./dreamy-magical-card";
 import MarqueePlayer from "./marquee-player";
 import VimCursor from "./vim-cursor";
+import LegacyHeading from "./legacy-heading";
+import LegacyTypewriter from "./legacy-typewriter";
 import { LibraryPage, Category, SwatchSpecimen } from "./library-specimen";
 
 /**
@@ -32,6 +34,24 @@ export default function CandidateComponents() {
 				</>
 			}
 		>
+			<Category name="Typography">
+				<SwatchSpecimen
+					name="Legacy Heading"
+					source="kept from: legacy.tsx (still present there)"
+					background="#000000"
+				>
+					<LegacyHeading />
+				</SwatchSpecimen>
+
+				<SwatchSpecimen
+					name="Legacy Typewriter"
+					source="kept from: legacy.tsx (still present there)"
+					background="#000000"
+				>
+					<LegacyTypewriter />
+				</SwatchSpecimen>
+			</Category>
+
 			<Category name="UI Elements">
 				<SwatchSpecimen name="Marquee Player" source="was: v4-playground.tsx" background="#000000">
 					<MarqueePlayer />
