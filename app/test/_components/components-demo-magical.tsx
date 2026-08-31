@@ -128,25 +128,6 @@ export default function MagicalComponentsDemoPage() {
             />
 
             <div className="max-w-5xl mx-auto relative z-10 space-y-16">
-                
-                {/* Version Switcher Navigation Bar */}
-                <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-[#170c2d]/80 border border-[#b388ff]/40 rounded-xl backdrop-blur-md">
-                    <div className="flex items-center gap-2 font-mono text-xs text-[#ff85c2]">
-                        <span>✧ SPEC EXPLORER:</span>
-                        <span className="text-[#fce4ec] font-semibold">STYLE VARIANTS</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <a 
-                            href="/components-demo" 
-                            className="font-mono text-xs px-3.5 py-1.5 rounded-lg border border-[#b388ff]/30 text-[#b388ff] hover:bg-[#b388ff]/10 hover:text-white transition-all"
-                        >
-                            💼 Version A: Enterprise Retro Geek
-                        </a>
-                        <span className="font-mono text-xs px-3.5 py-1.5 rounded-lg bg-[#ff85c2]/20 border border-[#ff85c2] text-[#ff85c2] font-semibold shadow-[0_0_12px_rgba(255,133,194,0.4)]">
-                            ✧ Version B: Dreamy Magical Geek (Current)
-                        </span>
-                    </div>
-                </div>
 
                 {/* Header Info */}
                 <div className="text-center space-y-3">

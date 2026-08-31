@@ -1,63 +1,57 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useThemeMode, THEMES, type Theme } from "./ui/theme-provider";
+import type { Theme } from "./ui/theme-provider";
 
+/**
+ * Every sandbox view, flat.
+ *
+ * Themes only affect the home composition, so rather than carrying a separate
+ * theme control, each themed home is simply its own view. Demo variants are
+ * top-level entries too — there is no nesting anywhere in this menu.
+ */
 export const SANDBOX_VIEWS = [
-	{ id: "home", label: "Home Preview" },
-	{ id: "demos", label: "Demos" },
-	{ id: "components", label: "Components Demo" },
-	{ id: "magical", label: "Magical Demo" },
-	{ id: "legacy", label: "Legacy Test" },
-] as const;
+	{ id: "home-cyberpunk", group: "Home", label: "Cyberpunk", theme: "cyberpunk" },
+	{ id: "home-citypop", group: "Home", label: "City Pop", theme: "citypop" },
+	{ id: "home-vanilla", group: "Home", label: "Vanilla", theme: "vanilla" },
+	{ id: "v1", group: "Demos", label: "v1 · Minimal" },
+	{ id: "v2", group: "Demos", label: "v2 · Enterprise" },
+	{ id: "v3", group: "Demos", label: "v3 · Accents" },
+	{ id: "v4", group: "Demos", label: "v4 · Playground" },
+	{ id: "v6", group: "Demos", label: "v6 · City Pop Spec" },
+	{ id: "retro-geek", group: "Specs", label: "Retro Geek" },
+	{ id: "dreamy-magical", group: "Specs", label: "Dreamy Magical" },
+	{ id: "legacy", group: "Specs", label: "Legacy Test" },
+] as const satisfies readonly {
+	id: string;
+	group: string;
+	label: string;
+	theme?: Theme;
+}[];
 
 export type SandboxView = (typeof SANDBOX_VIEWS)[number]["id"];
 
-export const DEMO_VERSIONS = [
-	{ id: 1, label: "Minimal" },
-	{ id: 2, label: "Enterprise" },
-	{ id: 3, label: "Accents" },
-	{ id: 4, label: "Playground" },
-	{ id: 6, label: "City Pop Spec" },
-] as const;
-
-export type DemoVersion = (typeof DEMO_VERSIONS)[number]["id"];
-
-const THEME_LABELS: Record<Theme, string> = {
-	cyberpunk: "Cyberpunk",
-	citypop: "City Pop",
-	vanilla: "Vanilla",
-};
+const GROUPS = ["Home", "Demos", "Specs"] as const;
 
 export interface SandboxMenuProps {
 	view: SandboxView;
 	onViewChange: (view: SandboxView) => void;
-	demoVersion: DemoVersion;
-	onDemoVersionChange: (version: DemoVersion) => void;
 }
 
 /**
  * Sandbox control menu.
  *
- * The sandbox deliberately has no navigation bar of its own — the only chrome
- * on /test is the production navbar. Everything needed to drive the sandbox
- * (which view, which demo version, which theme) collapses into this single
- * floating button, so each test page renders at full bleed with no layout
- * offset to account for.
+ * The sandbox has no navigation bar of its own — the only chrome on /test is
+ * the production navbar. Choosing a view collapses into this single floating
+ * button, so each test page renders at full bleed with no layout offset.
  *
  * Styling here is intentionally fixed and theme-independent: this is a control
  * surface, not content, so it must stay legible and in the same place while
- * you switch themes underneath it.
+ * the themed views change underneath it.
  */
-export function SandboxMenu({
-	view,
-	onViewChange,
-	demoVersion,
-	onDemoVersionChange,
-}: SandboxMenuProps) {
+export function SandboxMenu({ view, onViewChange }: SandboxMenuProps) {
 	const [open, setOpen] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
-	const { theme, setTheme } = useThemeMode();
 
 	useEffect(() => {
 		if (!open) return;
@@ -76,13 +70,6 @@ export function SandboxMenu({
 			document.removeEventListener("mousedown", onPointerDown);
 		};
 	}, [open]);
-
-	const itemClass = (active: boolean) =>
-		`w-full text-left px-2.5 py-1.5 rounded font-mono text-xs transition-colors ${
-			active
-				? "bg-[#ff85c2] text-[#0a0510] font-bold"
-				: "text-zinc-400 hover:text-white hover:bg-white/10"
-		}`;
 
 	return (
 		<div ref={rootRef} className="fixed top-16 right-3 z-[900]">
@@ -117,64 +104,34 @@ export function SandboxMenu({
 					role="menu"
 					className="absolute right-0 top-full mt-1.5 w-52 space-y-3 rounded-lg border border-[#b388ff]/30 bg-[#0e0919]/97 p-2 shadow-[0_8px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl"
 				>
-					<section>
-						<p className="px-2.5 pb-1 font-mono text-[10px] uppercase tracking-wider text-[#80deea]/70">
-							View
-						</p>
-						{SANDBOX_VIEWS.map((item) => (
-							<button
-								key={item.id}
-								type="button"
-								role="menuitem"
-								onClick={() => {
-									onViewChange(item.id);
-									setOpen(false);
-								}}
-								className={itemClass(view === item.id)}
-							>
-								{item.label}
-							</button>
-						))}
-					</section>
-
-					{view === "demos" && (
-						<section className="border-t border-white/10 pt-2">
+					{GROUPS.map((group, index) => (
+						<section
+							key={group}
+							className={index > 0 ? "border-t border-white/10 pt-2" : undefined}
+						>
 							<p className="px-2.5 pb-1 font-mono text-[10px] uppercase tracking-wider text-[#80deea]/70">
-								Demo Version
+								{group}
 							</p>
-							{DEMO_VERSIONS.map((item) => (
+							{SANDBOX_VIEWS.filter((item) => item.group === group).map((item) => (
 								<button
 									key={item.id}
 									type="button"
 									role="menuitem"
 									onClick={() => {
-										onDemoVersionChange(item.id);
+										onViewChange(item.id);
 										setOpen(false);
 									}}
-									className={itemClass(demoVersion === item.id)}
+									className={`w-full text-left px-2.5 py-1.5 rounded font-mono text-xs transition-colors ${
+										view === item.id
+											? "bg-[#ff85c2] text-[#0a0510] font-bold"
+											: "text-zinc-400 hover:text-white hover:bg-white/10"
+									}`}
 								>
-									<span className="text-[#80deea]">[v{item.id}]</span> {item.label}
+									{item.label}
 								</button>
 							))}
 						</section>
-					)}
-
-					<section className="border-t border-white/10 pt-2">
-						<p className="px-2.5 pb-1 font-mono text-[10px] uppercase tracking-wider text-[#80deea]/70">
-							Theme
-						</p>
-						{THEMES.map((id) => (
-							<button
-								key={id}
-								type="button"
-								role="menuitem"
-								onClick={() => setTheme(id)}
-								className={itemClass(theme === id)}
-							>
-								{THEME_LABELS[id]}
-							</button>
-						))}
-					</section>
+					))}
 				</div>
 			)}
 		</div>

@@ -2,9 +2,14 @@
 
 import React from "react";
 import Link from "next/link";
-import { ThemeToggle } from "@/app/test/_components/ui/theme-toggle";
 import { navbarVariants } from "@/app/test/_components/ui/variants/navbar";
 
+/**
+ * Themed navbar for the token-driven component set.
+ *
+ * Carries no theme switcher: the production surface is fixed-theme, and in the
+ * sandbox the theme is decided by which home view you select.
+ */
 export function Navbar() {
 	const { nav, container, brand, links, link } = navbarVariants();
 
@@ -20,10 +25,6 @@ export function Navbar() {
 						Home
 					</Link>
 				</nav>
-
-				<div className="flex items-center">
-					<ThemeToggle />
-				</div>
 			</div>
 		</header>
 	);
