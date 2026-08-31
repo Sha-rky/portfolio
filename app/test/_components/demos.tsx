@@ -838,9 +838,12 @@ const Version6WindowDemo = () => {
 // =========================================================================
 // MAIN SPA ROUTE: /demos (Version 1, 2, 3, 4, 6 Switcher)
 // =========================================================================
-export default function DemosSPAPage() {
-    const [activeVersion, setActiveVersion] = useState<1 | 2 | 3 | 4 | 6>(6);
+export interface DemosProps {
+    /** Controlled by the sandbox menu; this component owns no version state. */
+    activeVersion: 1 | 2 | 3 | 4 | 6;
+}
 
+export default function DemosSPAPage({ activeVersion }: DemosProps) {
     const versionMeta = {
         1: {
             title: "Version 1: Minimal Retro Geek",
@@ -870,7 +873,7 @@ export default function DemosSPAPage() {
     };
 
     return (
-        <div className="min-h-screen bg-black text-[#1a0f2e] relative selection:bg-[#ff85c2] selection:text-black pt-28 pb-16 px-4 md:px-8 overflow-x-hidden">
+        <div className="min-h-screen bg-black text-[#1a0f2e] relative selection:bg-[#ff85c2] selection:text-black pt-20 pb-16 px-4 md:px-8 overflow-x-hidden">
             {/* Citypop Moon Sea Reflection Background (Only for Version 3) */}
             {activeVersion === 3 && (
                 <div 
@@ -899,92 +902,9 @@ export default function DemosSPAPage() {
             )}
 
             <div className="max-w-5xl mx-auto relative z-10 space-y-10">
-                
-                {/* Master Header */}
-                <div className="text-center space-y-3">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#120a1c] border border-cyberpunk-purple/20 shadow-[0_0_15px_rgba(179,136,255,0.1)] border">
-                        <span className="w-2 h-2 rounded-full bg-cyberpunk-cyan animate-pulse"></span>
-                        <span className="font-mono text-xs text-cyberpunk-cyan tracking-wider font-semibold">
-                            SPA ROUTE // /demos
-                        </span>
-                    </div>
-                    <h1 className="font-cyberpunk text-3xl md:text-4xl text-white tracking-[0.1em] uppercase font-bold">
-                        Style Evolution Matrix
-                    </h1>
-                    <p className="font-sans text-xs md:text-sm text-cyberpunk-purple/80 max-w-xl mx-auto">
-                        透過下方 Tab 即可在同一個 SPA 頁面中即時切換比對版本：
-                    </p>
-                </div>
 
-                {/* 5-Version Switcher Tabs */}
-                <div className="flex flex-wrap gap-2 justify-center p-1.5 bg-[#120a1c]/90 border border-cyberpunk-purple/20 rounded-xl backdrop-blur-xl max-w-4xl mx-auto">
-                    {/* Version 1 */}
-                    <button
-                        onClick={() => setActiveVersion(1)}
-                        className={`flex-1 min-w-[130px] px-3 py-2.5 rounded-lg font-mono text-xs transition-all flex items-center justify-center gap-2 ${
-                            activeVersion === 1
-                                ? "bg-[#ff85c2] text-[#0a0510] font-bold"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
-                        }`}
-                    >
-                        <span>[v1]</span>
-                        <span>Minimal</span>
-                    </button>
-
-                    {/* Version 2 */}
-                    <button
-                        onClick={() => setActiveVersion(2)}
-                        className={`flex-1 min-w-[130px] px-3 py-2.5 rounded-lg font-mono text-xs transition-all flex items-center justify-center gap-2 ${
-                            activeVersion === 2
-                                ? "bg-cyberpunk-cyan text-cyberpunk-bg-dark font-bold"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
-                        }`}
-                    >
-                        <span>[v2]</span>
-                        <span>Enterprise</span>
-                    </button>
-
-                    {/* Version 3 */}
-                    <button
-                        onClick={() => setActiveVersion(3)}
-                        className={`flex-1 min-w-[130px] px-3 py-2.5 rounded-lg font-mono text-xs transition-all flex items-center justify-center gap-2 ${
-                            activeVersion === 3
-                                ? "bg-gradient-to-r from-cyberpunk-cyan to-cyberpunk-pink text-[#0a0510] font-bold shadow-[0_0_15px_rgba(255,133,194,0.4)]"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
-                        }`}
-                    >
-                        <span>[v3]</span>
-                        <span>Accents</span>
-                    </button>
-                    
-                    {/* Version 4 */}
-                    <button
-                        onClick={() => setActiveVersion(4)}
-                        className={`flex-1 min-w-[130px] px-3 py-2.5 rounded-lg font-mono text-xs transition-all flex items-center justify-center gap-2 ${
-                            activeVersion === 4
-                                ? "bg-white text-black font-bold shadow-[0_0_15px_rgba(255,255,255,0.6)]"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
-                        }`}
-                    >
-                        <span>[v4]</span>
-                        <span>Playground</span>
-                    </button>
-
-                    {/* Version 6 (City Pop Retro Window) */}
-                    <button
-                        onClick={() => setActiveVersion(6)}
-                        className={`flex-1 min-w-[130px] px-3 py-2.5 rounded-lg font-mono text-xs transition-all flex items-center justify-center gap-2 ${
-                            activeVersion === 6
-                                ? "bg-[#f472b6] text-black font-bold shadow-[0_0_15px_rgba(244,114,182,0.5)]"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
-                        }`}
-                    >
-                        <span>[v6]</span>
-                        <span>City Pop Spec</span>
-                    </button>
-                </div>
-
-                {/* Active Version Description Header */}
+                {/* Active version label. The switcher itself lives in the
+                    sandbox menu, so this only identifies what is on screen. */}
                 <div className="text-center space-y-1 border-b border-cyberpunk-purple/15 pb-4">
                     <div className="font-cyberpunk text-lg text-white flex items-center justify-center gap-2">
                         {versionMeta[activeVersion].title}
