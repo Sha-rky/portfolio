@@ -48,9 +48,16 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-    return (
-		<html lang="en">
-			<body className={`${geist.className} ${orbitron.variable} ${dotGothic16.variable} ${geistMono.variable}`}>
+	// Font variables go on <html>, not <body>: the theme registry in
+	// globals.css is scoped to :root, and CSS variables only inherit downward.
+	// Declared on <body> they would be invisible to :root, silently breaking
+	// the per-theme display font.
+	return (
+		<html
+			lang="en"
+			className={`${geist.variable} ${orbitron.variable} ${dotGothic16.variable} ${geistMono.variable}`}
+		>
+			<body className="font-sans">
 				<Navbar/>
 				{children}
 			</body>

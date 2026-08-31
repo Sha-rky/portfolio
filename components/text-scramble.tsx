@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
@@ -47,7 +49,7 @@ const initializeCharStates = (word: string): CharState[] => {
 	}));
 };
 
-export default function HeroScrambleText({
+export default function TextScramble({
 	words = DEFAULT_WORDS,
 	interval = DEFAULT_INTERVAL,
 	chars = DEFAULT_CHARS,

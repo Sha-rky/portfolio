@@ -1,191 +1,109 @@
 @import "tailwindcss";
 
 /* =========================================================================
-   PRODUCTION LAYER — original main-branch styling, byte-for-byte.
-   `/home` and everything under the root layout depend on this.
-   The token layer below must never redefine `--background` / `--foreground`,
-   or picking a theme in /test would repaint /home.
-   ========================================================================= */
-
-:root {
-	/* --background: #ffffff;
-	--foreground: #171717; */
-	--background: #0a0a0a;
-	--foreground: #ededed;
-}
-
-@theme inline {
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
-	--font-cyberpunk: var(--font-orbitron);
-	--font-pixel: var(--font-dot-gothic-16);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
-}
-
-body {
-	background: var(--background);
-	color: var(--foreground);
-	/* font-family: Arial, Helvetica, sans-serif; */
-}
-
-/* =========================================================================
-   TOKEN LAYER — sandbox only (`/test`).
+   THEME REGISTRY
    -------------------------------------------------------------------------
-   Every custom property here is namespaced `--theme-*` and scoped to
-   [data-theme="..."], which only `app/test/layout.tsx` turns on. Nothing here
-   redefines the production `--background` / `--foreground`, so choosing a
-   theme in /test can never repaint /home.
+   This file is the ONLY place that knows what a theme looks like. Components
+   reference semantic utilities (bg-surface, text-muted, rounded-card,
+   font-display) and never a literal colour.
 
-   This is the ONLY place that knows what a theme looks like. Adding a
-   fourth theme = adding one [data-theme] block. No .tsx file changes.
+   There is currently ONE theme, `cyberpunk`, which reproduces the original
+   home design. Adding a second theme means adding one [data-theme="..."]
+   block below and nothing else — no .tsx file should need to change.
+
+   `:root` carries the default theme so the production surface renders
+   without needing a provider. A [data-theme] wrapper (used by the /test
+   sandbox) overrides it for previewing other themes.
    ========================================================================= */
 
-/* Neutral defaults so the sandbox utilities still resolve outside a
-   [data-theme] scope. These are distinct from the production `--background` /
-   `--foreground` above, which `body` uses and which nothing here touches.
-   Note: `@theme inline` does not accept a nested var() fallback, so the
-   default has to live here rather than inline in the mapping below. */
-:root {
-	--theme-bg: #0a0a0a;
-	--theme-fg: #ededed;
-}
-
 @theme inline {
-	/* Colors */
+	/* Colours */
 	--color-background: var(--theme-bg);
 	--color-foreground: var(--theme-fg);
+	--color-emphasis: var(--theme-emphasis);
 	--color-muted: var(--theme-muted);
+	--color-subtle: var(--theme-subtle);
 	--color-surface: var(--theme-surface);
 	--color-surface-raised: var(--theme-surface-raised);
+	--color-media: var(--theme-media);
 	--color-border: var(--theme-border);
-	--color-border-strong: var(--theme-border-strong);
 	--color-accent: var(--theme-accent);
-	--color-accent-foreground: var(--theme-accent-fg);
-	--color-secondary: var(--theme-secondary);
+	--color-link: var(--theme-link);
+	--color-link-hover: var(--theme-link-hover);
+	--color-highlight: var(--theme-highlight);
+	--color-tag: var(--theme-tag-fg);
 
 	/* Geometry */
 	--radius-card: var(--theme-radius-card);
-	--radius-control: var(--theme-radius-control);
+	--radius-media: var(--theme-radius-media);
 	--radius-tag: var(--theme-radius-tag);
 
-	/* Effects */
-	--shadow-card: var(--theme-shadow-card);
-	--shadow-card-hover: var(--theme-shadow-card-hover);
-	--shadow-control: var(--theme-shadow-control);
-
-	/* Type — display face is theme-dependent */
-	--font-display: var(--theme-display-font);
+	/* Type */
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
+	--font-display: var(--theme-font-display);
+	--font-pixel: var(--theme-font-pixel);
 }
 
 /* -------------------------------------------------------------------------
-   CYBERPUNK — neon glow on black, soft rounded glass surfaces
+   CYBERPUNK — the original home design: near-black canvas, neon pink and
+   cyan accents, Orbitron display type over a pixel section heading.
    ------------------------------------------------------------------------- */
+:root,
 [data-theme="cyberpunk"] {
-	--theme-bg: #000000;
-	--theme-fg: #f8fafc;
+	--theme-bg: #0a0a0a;
+	--theme-fg: #ededed;
+	/* Titles sit a step brighter than body text, deliberately pure white. */
+	--theme-emphasis: #ffffff;
 	--theme-muted: #9ca3af;
-	--theme-surface: rgb(0 0 0 / 0.4);
+	--theme-subtle: #71717a;
+
+	--theme-surface: transparent;
 	--theme-surface-raised: rgb(255 255 255 / 0.1);
+	--theme-media: rgb(0 0 0 / 0.6);
 	--theme-border: rgb(255 255 255 / 0.1);
-	--theme-border-strong: rgb(255 255 255 / 0.25);
-	--theme-accent: #ff007f;
-	--theme-accent-fg: #ffffff;
-	--theme-secondary: #80deea;
+	--theme-tag-fg: #d1d5db;
+
+	--theme-accent: #ec4899;
+	--theme-link: #f472b6;
+	--theme-link-hover: #a855f7;
+	--theme-link-glow: rgb(255 0 255 / 0.8);
+
+	--theme-highlight: #00eaff;
+	--theme-highlight-shadow: #ff4f9a;
+
+	--theme-glitch-a: #ff2a6d;
+	--theme-glitch-b: #ff1f71;
 
 	--theme-radius-card: 0.75rem;
-	--theme-radius-control: 0.25rem;
+	--theme-radius-media: 0.5rem;
 	--theme-radius-tag: 9999px;
 
-	--theme-shadow-card: none;
-	--theme-shadow-card-hover: 0 0 20px rgb(0 255 255 / 0.15);
-	--theme-shadow-control: 0 0 10px rgb(0 0 0 / 0.5);
+	--theme-font-display: var(--font-orbitron);
+	--theme-font-pixel: var(--font-dot-gothic-16);
 
-	--theme-display-font: var(--font-orbitron);
-	--theme-glow: 0 0 12px var(--theme-accent);
-	--theme-blur: 4px;
-	--theme-border-width: 1px;
+	--theme-heading-tracking: 0.05em;
 }
 
 /* -------------------------------------------------------------------------
-   CITYPOP — retro pixel windows, hard offset shadows, sharp corners
+   Effects Tailwind has no first-class utility for.
+
+   Custom utility names are kept clear of Tailwind's own prefixes on purpose:
+   tailwind-merge groups anything matching e.g. `border-*` as one conflicting
+   utility, so a name like `border-theme` would be silently dropped when it
+   appeared alongside `border-border`.
    ------------------------------------------------------------------------- */
-[data-theme="citypop"] {
-	--theme-bg: #090414;
-	--theme-fg: #f8fafc;
-	--theme-muted: #cbd5e1;
-	--theme-surface: #0e0919;
-	--theme-surface-raised: #140e24;
-	--theme-border: #b388ff;
-	--theme-border-strong: #ff85c2;
-	--theme-accent: #ff85c2;
-	--theme-accent-fg: #090414;
-	--theme-secondary: #80deea;
-
-	--theme-radius-card: 0rem;
-	--theme-radius-control: 0.125rem;
-	--theme-radius-tag: 0.125rem;
-
-	--theme-shadow-card: 6px 6px 0px var(--theme-accent);
-	--theme-shadow-card-hover: 8px 8px 0px var(--theme-accent);
-	--theme-shadow-control: 2px 2px 0px var(--theme-accent);
-
-	--theme-display-font: var(--font-orbitron);
-	--theme-glow: 0 0 10px var(--theme-accent);
-	--theme-blur: 0px;
-	--theme-border-width: 2px;
+@utility link-glow {
+	filter: drop-shadow(0 0 10px var(--theme-link-glow));
 }
 
-/* -------------------------------------------------------------------------
-   VANILLA — clean light editorial, no glow, soft elevation
-   ------------------------------------------------------------------------- */
-[data-theme="vanilla"] {
-	--theme-bg: #ffffff;
-	--theme-fg: #18181b;
-	--theme-muted: #71717a;
-	--theme-surface: #ffffff;
-	--theme-surface-raised: #f4f4f5;
-	--theme-border: #e4e4e7;
-	--theme-border-strong: #d4d4d8;
-	--theme-accent: #18181b;
-	--theme-accent-fg: #ffffff;
-	--theme-secondary: #52525b;
-
-	--theme-radius-card: 0.5rem;
-	--theme-radius-control: 0.25rem;
-	--theme-radius-tag: 0.25rem;
-
-	--theme-shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-	--theme-shadow-card-hover: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-	--theme-shadow-control: none;
-
-	--theme-display-font: var(--font-geist-sans);
-	--theme-glow: none;
-	--theme-blur: 0px;
-	--theme-border-width: 1px;
+@utility heading-emboss {
+	text-shadow: -2px -2px 0 var(--theme-highlight-shadow);
+	letter-spacing: var(--theme-heading-tracking);
 }
 
-/* -------------------------------------------------------------------------
-   Semantic helpers for effects Tailwind has no first-class utility for.
-   ------------------------------------------------------------------------- */
-@utility glow-accent {
-	filter: drop-shadow(var(--theme-glow));
-}
-
-/* Named `theme-border`, NOT `border-theme`, on purpose: tailwind-merge groups
-   anything matching `border-*` as one conflicting utility, so `border-theme`
-   sat in the same group as `border-border` and tv() silently dropped it.
-   Keep custom utility names clear of Tailwind's own prefixes. */
-@utility theme-border {
-	border-width: var(--theme-border-width);
-	border-style: solid;
-}
-
-@utility blur-surface {
-	backdrop-filter: blur(var(--theme-blur));
+body {
+	background: var(--theme-bg);
+	color: var(--theme-fg);
+	overflow-x: hidden;
 }
