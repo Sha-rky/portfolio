@@ -1,37 +1,36 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import CurrentComponents from "./_candidates/current-components";
-import CandidateComponents from "./_candidates/candidate-components";
-import Legacy from "./_candidates/legacy";
+import CurrentComponents from "./_sandbox/current-components";
+import CandidateComponents from "./_sandbox/candidate-components";
+import HomeRemake from "./_sandbox/home-remake";
 
 const CANDIDATES = [
 	{ id: "current", group: "Library", label: "Current Components", Component: CurrentComponents },
 	{ id: "candidates", group: "Library", label: "Candidate Components", Component: CandidateComponents },
-	{ id: "legacy", group: "Legacy", label: "Legacy Test", Component: Legacy },
+	{ id: "home-remake", group: "Pages", label: "Home Remake", Component: HomeRemake },
 ] as const;
 
 type CandidateId = (typeof CANDIDATES)[number]["id"];
 
-const GROUPS = ["Library", "Legacy"] as const;
+const GROUPS = ["Library", "Pages"] as const;
 
 /**
  * Sandbox shell.
  *
- * `app/test` holds only this file and `_candidates/`. There is no navigation
+ * `app/test` holds only this file and `_sandbox/`. There is no navigation
  * bar of its own — the production navbar is the only chrome, and candidate
  * selection collapses into the floating button below, so every candidate
  * renders at full bleed exactly as it would on a real page.
  *
  * The menu is inlined here rather than extracted: it is shell, not a
- * candidate, and `_candidates/` is reserved for pages that are in the running.
+ * candidate, and `_sandbox/` is reserved for pages that are in the running.
  *
- * Cleared down to three candidates on request. The "Library" group splits
- * what's kept into two pages by an honesty boundary: Current Components
- * (imported live from components/, so a production regression shows up
- * here too) and Candidate Components (sandbox pieces kept from deleted
- * candidates, styled directly, never wired into production). Legacy Test
- * is kept in full and untouched.
+ * The "Library" group splits what's kept into two pages by an honesty
+ * boundary: Current Components (imported live from components/, so a
+ * production regression shows up here too) and Candidate Components (sandbox
+ * pieces kept from deleted candidates, styled directly, never wired into
+ * production).
  */
 export default function TestSPAPage() {
 	const [active, setActive] = useState<CandidateId>("current");
