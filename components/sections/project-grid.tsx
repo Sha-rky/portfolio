@@ -1,7 +1,7 @@
-import Container from "@/components/container";
-import Card from "@/components/card";
+import Container from "@/components/ui/container";
+import Card from "@/components/ui/card";
 import { Project, defaultProjects } from "@/data/projects";
-import { projectGridVariants } from "@/components/variants/project-grid";
+import { projectGridVariants } from "@/components/sections/project-grid.variants";
 
 export interface ProjectGridProps {
 	projects?: Project[];

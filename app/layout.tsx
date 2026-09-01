@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Orbitron, DotGothic16, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/ui/navbar";
 
 const geist = Geist({
 	subsets: ['latin'],

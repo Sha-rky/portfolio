@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import Card from "@/components/card";
-import Container from "@/components/container";
-import HeroGlitchTitle from "@/components/hero-glitch-title";
-import TextScramble from "@/components/text-scramble";
+import Card from "@/components/ui/card";
+import Container from "@/components/ui/container";
+import GlitchText from "@/components/effects/glitch-text";
+import ScrambleText from "@/components/effects/scramble-text";
 import { defaultProjects } from "@/data/projects";
 import { LibraryPage, Category, Specimen } from "./library-specimen";
 
@@ -29,14 +29,14 @@ export default function CurrentComponents() {
 			}
 		>
 			<Category name="Typography">
-				<Specimen name="HeroGlitchTitle" source="components/hero-glitch-title.tsx">
-					<HeroGlitchTitle text="Ryan Luo" />
+				<Specimen name="GlitchText" source="components/effects/glitch-text.tsx">
+					<GlitchText text="Ryan Luo" className="relative text-6xl md:text-8xl font-bold text-emphasis" />
 				</Specimen>
 
-				<Specimen name="TextScramble" source="components/text-scramble.tsx">
+				<Specimen name="ScrambleText" source="components/effects/scramble-text.tsx">
 					<p className="font-display text-3xl font-light text-subtle">
 						I am a&nbsp;
-						<TextScramble
+						<ScrambleText
 							words={["ML Engineer", "Web Developer", "Python Developer"]}
 							className="text-accent"
 						/>
@@ -45,7 +45,7 @@ export default function CurrentComponents() {
 			</Category>
 
 			<Category name="Content">
-				<Specimen name="Card" source="components/card.tsx">
+				<Specimen name="Card" source="components/ui/card.tsx">
 					<div className="grid gap-6 md:grid-cols-2">
 						{defaultProjects.slice(0, 2).map((project) => (
 							<Card key={project.id} project={project} />
@@ -55,13 +55,13 @@ export default function CurrentComponents() {
 			</Category>
 
 			<Category name="Layout">
-				<Specimen name="Container" source="components/container.tsx">
+				<Specimen name="Container" source="components/ui/container.tsx">
 					<Container className="border border-dashed border-[#b388ff]/50 py-4 text-center font-mono text-xs text-zinc-400">
 						container mx-auto max-w-7xl
 					</Container>
 				</Specimen>
 
-				<Specimen name="Navbar" source="components/navbar.tsx">
+				<Specimen name="Navbar" source="components/ui/navbar.tsx">
 					<p className="font-mono text-xs text-zinc-500">
 						Fixed to the viewport, so it is already rendered at the top of this page
 						by the root layout rather than duplicated here.
@@ -70,7 +70,7 @@ export default function CurrentComponents() {
 			</Category>
 
 			<Category name="Effects">
-				<Specimen name="NeonBackground" source="components/neon-background.tsx">
+				<Specimen name="NeonBackground" source="components/effects/neon-background.tsx">
 					<p className="font-mono text-xs text-zinc-500">
 						Scroll-driven ambient wash, bound to <code>#projects-grid</code>. It has
 						no standalone appearance — see the Home route.

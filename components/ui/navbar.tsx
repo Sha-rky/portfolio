@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { navbarVariants } from "@/components/variants/navbar";
+import { navbarVariants } from "@/components/ui/navbar.variants";
 
 const LINKS = ["home"];
 
-export function Navbar() {
+export default function Navbar() {
 	const { nav, list, link } = navbarVariants();
 
 	return (
@@ -20,5 +20,3 @@ export function Navbar() {
 		</nav>
 	);
 }
-
-export default Navbar;

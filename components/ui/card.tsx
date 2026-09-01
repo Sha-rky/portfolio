@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Project } from "@/data/projects";
-import { cardVariants } from "@/components/variants/card";
+import { cardVariants } from "@/components/ui/card.variants";
 
 export interface CardProps {
 	project: Project;

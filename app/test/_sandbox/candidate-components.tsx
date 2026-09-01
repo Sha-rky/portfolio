@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import TerminalWindow from "./terminal-window";
+import TerminalWindow from "./terminal-card";
 import { RetroGeekProjectCard } from "./retro-geek-card";
 import { DreamyMagicalProjectCard } from "./dreamy-magical-card";
 import MarqueePlayer from "./marquee-player";

@@ -1,26 +1,32 @@
 "use client";
 
-import { heroVariants } from "@/components/variants/hero";
+export interface GlitchTextProps {
+	text: string;
+	className?: string;
+}
 
 /**
- * Glitch treatment for the hero title.
+ * Glitch treatment for arbitrary text.
+ *
+ * Renders a plain `<span>` — no assumption about heading level or semantics.
+ * If the caller needs this to be a page heading, wrap it in the appropriate
+ * `<h1>`/`<h2>` themselves; this component only owns the visual effect.
  *
  * The two offset copies are pseudo-elements, so their colours have to come
  * from CSS variables directly rather than utility classes. They still resolve
- * through the theme registry, so this stays theme-agnostic.
+ * through the theme registry, so this stays theme-agnostic. Sizing/weight is
+ * the caller's concern — pass it in via `className`.
  */
-export default function HeroGlitchTitle({ text }: { text: string }) {
-	const { title } = heroVariants();
-
+export default function GlitchText({ text, className = "" }: GlitchTextProps) {
 	return (
 		<>
-			<h1 className={`glitch-title ${title()}`} data-text={text}>
+			<span className={`glitch-text ${className}`} data-text={text}>
 				{text}
-			</h1>
+			</span>
 
 			<style jsx>{`
-				.glitch-title::before,
-				.glitch-title::after {
+				.glitch-text::before,
+				.glitch-text::after {
 					content: attr(data-text);
 					position: absolute;
 					top: 0;
@@ -29,13 +35,13 @@ export default function HeroGlitchTitle({ text }: { text: string }) {
 					overflow: hidden;
 				}
 
-				.glitch-title::before {
+				.glitch-text::before {
 					left: -2px;
 					text-shadow: 2px 0 var(--theme-glitch-a);
 					animation: noise-anim 2s infinite linear alternate-reverse;
 				}
 
-				.glitch-title::after {
+				.glitch-text::after {
 					left: 2px;
 					text-shadow: -2px 0 var(--theme-glitch-b);
 					animation: noise-anim-2 3s infinite linear alternate-reverse;

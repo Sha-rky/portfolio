@@ -8,7 +8,7 @@ import React from "react";
  * Extracted from the deleted `retro-geek.tsx` candidate when the sandbox was
  * cleared — kept specifically because the windowed title-bar treatment (with
  * badge and Windows-style min/max/close controls) reads differently from the
- * other window chromes (terminal-window.tsx's boxier controls, the Dreamy
+ * other window chromes (terminal-card.tsx's boxier controls, the Dreamy
  * Magical gradient titlebar). Not promoted to components/; this is sandbox
  * history preserved on the Library page, not production.
  */

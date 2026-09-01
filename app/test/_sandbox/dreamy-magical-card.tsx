@@ -7,7 +7,7 @@ import React from "react";
  *
  * Extracted from the deleted `dreamy-magical.tsx` candidate when the sandbox
  * was cleared — kept for the gradient titlebar and sparkle-accented chrome,
- * distinct from both terminal-window.tsx and retro-geek-card.tsx. Not
+ * distinct from both terminal-card.tsx and retro-geek-card.tsx. Not
  * promoted to components/; sandbox history preserved on the Library page.
  */
 export interface DreamyMagicalWindowProps {

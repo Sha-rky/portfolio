@@ -1,6 +1,6 @@
-import Hero from "@/components/hero";
-import ProjectGrid from "@/components/project-grid";
-import NeonBackground from "@/components/neon-background";
+import Hero from "@/components/sections/hero";
+import ProjectGrid from "@/components/sections/project-grid";
+import NeonBackground from "@/components/effects/neon-background";
 
 export default function Home() {
 	return (

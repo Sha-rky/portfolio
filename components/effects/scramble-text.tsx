@@ -49,7 +49,7 @@ const initializeCharStates = (word: string): CharState[] => {
 	}));
 };
 
-export default function TextScramble({
+export default function ScrambleText({
 	words = DEFAULT_WORDS,
 	interval = DEFAULT_INTERVAL,
 	chars = DEFAULT_CHARS,
